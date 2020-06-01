@@ -8,11 +8,17 @@ The Milton Historic Commission is working to expand the city's commitment to his
 
 ## Site Info
 ### Login
-http://miltonhistoricsites.org/admin/users/login
+http://miltonhistoricsites.org/admin/users/login  
 Username: MiltonHistoric
 ### Domain management
-https://portal.reclaimhosting.com/clientarea.php
+https://portal.reclaimhosting.com/clientarea.php  
 Email: miltonhistoricsites@gmail.com
+
+## Omeka REST APIs
+https://omeka.readthedocs.io/en/latest/Reference/api/  
+Examples:  
+Javascript: https://github.com/jimsafley/omeka-client-js  
+Python: https://github.com/wcaleb/omekadd
 
 ## References
 https://github.com/CPHDH/Curatescape  
