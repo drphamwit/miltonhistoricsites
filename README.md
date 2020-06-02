@@ -20,6 +20,9 @@ Examples:
 Javascript: https://github.com/jimsafley/omeka-client-js  
 Python: https://github.com/wcaleb/omekadd
 
+## Getting data in JSON format
+?output=mobile-json
+
 ## References
 https://github.com/CPHDH/Curatescape  
 https://github.com/CPHDH/Curatescape/wiki/Configuring-omeka-for-curatescape  
