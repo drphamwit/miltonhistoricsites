@@ -29,3 +29,77 @@ https://github.com/CPHDH/Curatescape/wiki/Configuring-omeka-for-curatescape
 https://forum.curatescape.org/t/installation-documentation/258  
 https://play.google.com/store/apps/details?id=org.curatescape.dchistoric  
 
+## Getting started
+Before you attempt to clone the project, it is important to get your react native development environment ready. Instructions for different operating systems can be found in the following link: https://reactnative.dev/docs/environment-setup this project uses react-native cli so make sure to setup according to this (make sure not to use expo, the project will not run). Make sure to follow the instructions carefully. Once this is complete we can proceed with cloning the project.
+
+Open a terminal session. If you are on windows I would reccomend using git bash as some commands we will be using are not compatible with windows cmd
+
+Clone the repository by running the following command: 
+
+```console
+~/Dev$ git clone https://github.com/drphamwit/miltonhistoricsites.git
+```
+
+Navigate to the MiltonHistoricApp folder: 
+
+```console
+~/Dev$ cd miltonhistoricsites
+```
+
+Navigate to the MiltonHistoricApp folder: 
+
+```console
+~/Dev/miltonhistoricsites$ cd MiltonHistoricApp
+```
+
+To install dependencies run:
+
+```console
+~/Dev/miltonhistoricsites/MiltonHistoricApp$ npm install
+```
+
+### Android Instructions
+Make sure that you only have one device connected. You can verify this by running: 
+
+```console
+~/Dev/miltonhistoricsites/MiltonHistoricApp$ adb devices
+```
+
+If you would like to run on android use:
+
+```console
+~/Dev/miltonhistoricsites/MiltonHistoricApp$ npx react-native run-android
+```
+
+### IOS Instructions
+If you would like to run on IOS, ensure that you are using MacOS, this is the only way to run the IOS version of the app. 
+
+Navigate to ios folder:
+
+```console
+~/Dev/miltonhistoricsites/MiltonHistoricApp$ cd ios
+```
+
+Make sure you have CocoaPods Installed, running the following command will take care of this (if you already have it, cocoapods will be updated to the latest version):
+
+```console
+~/Dev/miltonhistoricsites/MiltonHistoricApp/ios$ sudo gem install cocoapods
+```
+
+Install dependencies:
+
+```console
+~/Dev/miltonhistoricsites/MiltonHistoricApp/ios$ pod install
+```
+
+Navigate back to the react native project:
+
+```console
+~/Dev/miltonhistoricsites/MiltonHistoricApp/ios$ cd ..
+```
+
+Finally run: 
+
+```console
+~/Dev/miltonhistoricsites/MiltonHistoricApp$ npx react-native run-ios
+```
