@@ -71,6 +71,11 @@ If you would like to run on android use:
 ~/Dev/miltonhistoricsites/MiltonHistoricApp$ npx react-native run-android
 ```
 
+The result should look like the following:
+![Successful Android Run](/Images/Android-Run-Example.png)
+And a terminal process should open that looks like this:
+![Terminal Process](/Images/Terminal-Run-Example.jpeg)
+ 
 ### IOS Instructions
 If you would like to run on IOS, ensure that you are using MacOS, this is the only way to run the IOS version of the app. 
 
@@ -103,3 +108,9 @@ Finally run:
 ```console
 ~/Dev/miltonhistoricsites/MiltonHistoricApp$ npx react-native run-ios
 ```
+
+The result should look like the following:
+![Successful IOS Run](/Images/IOS-Run-Example.jpeg)
+
+And the corresponding terminal window:
+![Terminal Process](/Images/Terminal-Run-Example.jpeg)
