@@ -72,9 +72,12 @@ If you would like to run on android use:
 ```
 
 The result should look like the following:
-![Successful Android Run](/Images/Android-Run-Example.png)
+
+<img src="/Images/Android-Run-Example.png" height="439" width="245">
+
 And a terminal process should open that looks like this:
-![Terminal Process](/Images/Terminal-Run-Example.jpeg)
+
+<img src="/Images/Terminal-Run-Example.jpeg" height="182" width="293">
  
 ### IOS Instructions
 If you would like to run on IOS, ensure that you are using MacOS, this is the only way to run the IOS version of the app. 
@@ -110,7 +113,9 @@ Finally run:
 ```
 
 The result should look like the following:
-![Successful IOS Run](/Images/IOS-Run-Example.jpeg)
+
+<img src="/Images/IOS-Run-Example.jpeg" height="488" width="238">
 
 And the corresponding terminal window:
-![Terminal Process](/Images/Terminal-Run-Example.jpeg)
+
+<img src="/Images/Terminal-Run-Example.jpeg" height="182" width="293">
