@@ -1,3 +1,7 @@
+import fetchMocks from 'jest-fetch-mock'
+
+fetchMocks.enableMocks()
+
 jest.mock('react-native-reanimated', () => {
 
     const {View} = require('react-native');
