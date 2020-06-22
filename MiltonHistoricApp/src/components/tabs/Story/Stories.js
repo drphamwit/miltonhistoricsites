@@ -3,7 +3,7 @@ import { View } from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import StoryDisplay from './StoryDisplay'
 import SingleStory from './SingleStory'
-import axios from 'axios'
+import api from '../../../utils/api'
 
 
 const Tab = createMaterialTopTabNavigator();
@@ -17,12 +17,9 @@ const Stories = () => {
   }
 
   useEffect(() => {
-    axios
-    .get('http://miltonhistoricsites.org/items/browse?output=mobile-json')
-    .then(response => {
-      setItems(response.data.items)
+    api.getAllStories().then(response => {
+      setItems(response.items)
     })
-    .catch(error => console.log(error))
   }, [])
 
   return (selectedItem) ? <SingleStory item={selectedItem} backCallBack={selectedCallback}/> 

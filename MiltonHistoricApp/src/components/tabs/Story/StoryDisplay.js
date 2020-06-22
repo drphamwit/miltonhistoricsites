@@ -26,7 +26,7 @@ const StoryDisplay = ( { items, selectedCallback } )  => {
         keyExtractor={item => item.id.toString()}
       />
     )
-  }
+}
 
 const styles = StyleSheet.create({
     listItemView: {

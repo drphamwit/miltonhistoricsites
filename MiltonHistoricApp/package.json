@@ -16,6 +16,7 @@
     "@react-navigation/material-top-tabs": "^5.2.10",
     "@react-navigation/native": "^5.5.0",
     "axios": "^0.19.2",
+    "moment": "^2.27.0",
     "react": "16.11.0",
     "react-native": "0.62.2",
     "react-native-gesture-handler": "^1.6.1",
