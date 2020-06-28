@@ -1,6 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import {View, Text, StyleSheet } from 'react-native';
 
 const Header = ({title}) => {
   return (

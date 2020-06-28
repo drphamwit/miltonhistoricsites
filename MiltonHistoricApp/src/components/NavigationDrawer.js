@@ -4,7 +4,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer'
 import Map from './tabs/Map'
 import Stories from './tabs/Stories'
 import Discover from './tabs/Discover'
-import Tours from './tabs/Tours'
+import Tours from './tabs/Tour/Tours'
 import Search from './tabs/Search'
 import { NavigationContainer } from '@react-navigation/native'
 

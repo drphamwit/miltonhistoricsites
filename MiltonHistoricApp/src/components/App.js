@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import NavigationBar from './NavigationBar'
 import Header from './Header'
 
-export default function App() {
+const App = () => {
   return (
       <NavigationContainer style={styles.container}>
         <Header title={"Milton Historic Sites"} />
@@ -13,6 +13,8 @@ export default function App() {
       </NavigationContainer>
   )
 }
+
+export default App
 
 const styles = StyleSheet.create({
   container: {

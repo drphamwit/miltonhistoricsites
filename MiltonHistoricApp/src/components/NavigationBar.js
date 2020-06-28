@@ -4,7 +4,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import Map from './tabs/Map'
 import Stories from './tabs/Story/Stories'
 import Discover from './tabs/Discover'
-import Tours from './tabs/Tours'
+import Tours from './tabs/Tour/Tours'
 import Search from './tabs/Search'
 
 const Tab = createBottomTabNavigator()
