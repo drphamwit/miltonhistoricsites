@@ -1,5 +1,4 @@
 import api from './api'
-import fetchMock from 'jest-fetch-mock'
 
 beforeEach(() => {
   fetch.resetMocks()

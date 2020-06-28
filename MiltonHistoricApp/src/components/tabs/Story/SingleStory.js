@@ -141,7 +141,9 @@ const styles = StyleSheet.create({
         aspectRatio: 1.5
     },
     italic: {
-        fontStyle: 'italic'
+        fontStyle: 'italic',
+        marginLeft: 10,
+        marginRight: 10
     },
     mapTitle: {
         padding: 5,
@@ -162,13 +164,13 @@ const styles = StyleSheet.create({
         marginBottom: 5
     },
     subGroup: {
-        marginBottom: 10
+        marginBottom: 10,
+        marginLeft: 10,
+        marginRight: 10
     },
     box: {
         borderColor: 'black',
         backgroundColor: 'lightgray',
-        marginRight: 5,
-        marginLeft: 5
     }
 })
 export default SingleStory
