@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { ScrollView, View, Image, Text, StyleSheet, Dimensions, FlatList, Linking } from 'react-native'
+import { ScrollView, View, Image, Text, StyleSheet, Dimensions, Linking } from 'react-native'
+import MapView, { PROVIDER_GOOGLE, Marker} from 'react-native-maps'
 import api from '../../../utils/api'
 import LoadingIcon from '../../misc/LoadingIcon'
 import BackButton from '../../misc/BackButton'
 import moment from 'moment'
+import StoryMarker from './StoryMarker'
 
 const width = Dimensions.get('window').width
 
@@ -72,7 +74,18 @@ const SingleStory = ({ item, backCallBack }) => {
             <View style={{backgroundColor: 'white'}} >
                 <Text style={styles.mapTitle}>Map</Text>
                 <View style={styles.horizLine} />
-                <Image style={styles.image} source={{uri: item.fullsize}} />
+                <MapView 
+                    provider={PROVIDER_GOOGLE}
+                    style={styles.image} 
+                    region={{
+                        latitude: item.latitude,
+                        longitude: item.longitude,
+                        latitudeDelta: 0.1,
+                        longitudeDelta: 0.035
+                    }}
+                    >
+                        <StoryMarker story={content} />  
+                    </MapView>
                 <Text style={styles.italic}>{content.address}</Text>
             </View>
             <View style={styles.bottomContent}>

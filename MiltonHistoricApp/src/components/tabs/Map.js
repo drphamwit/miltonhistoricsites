@@ -3,18 +3,7 @@ import { Text, View, Image} from 'react-native'
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps'
 import api from '../../utils/api'
 import LoadingIcon from '../misc/LoadingIcon'
-
-
-const StoryMarker = ({ story }) => (
-  <Marker
-    coordinate={{ latitude: story.latitude, longitude: story.longitude}}
-  >
-    <Callout>
-      <Text style={{marginTop: 5}}><Image source={{uri: story.thumbnail}} style={{width: 200, height: 100, padding: 10}} /></Text>
-      <Text>{story.title}</Text>
-    </Callout>
-  </Marker>
-)
+import StoryMarker from './Story/StoryMarker'
 
 const Map = () => {
   const [loading, setLoading] = useState(true)
