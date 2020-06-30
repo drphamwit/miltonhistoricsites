@@ -7,7 +7,7 @@ import SingleTour from './SingleTour'
 
 const Tab = createMaterialTopTabNavigator();
 
-const Tours = () => {
+const Tours = ({ navigation }) => {
   const [items, setItems] = useState([])
   const [selectedItem, setSelectedItem] = useState('')
 

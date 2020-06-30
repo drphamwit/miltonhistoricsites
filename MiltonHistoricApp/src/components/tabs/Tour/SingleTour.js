@@ -4,7 +4,6 @@ import { ScrollView } from 'react-native-gesture-handler'
 import LoadingIcon from '../../misc/LoadingIcon'
 import BackButton from '../../misc/BackButton'
 import api from '../../../utils/api'
-import Tours from './Tours'
 
 const width = Dimensions.get('window').width
 
