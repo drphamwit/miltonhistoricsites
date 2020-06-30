@@ -7,7 +7,12 @@ const StoryMarker = ({ story }) => (
       coordinate={{ latitude: story.latitude, longitude: story.longitude}}
     >
       <Callout>
-        <Text style={{marginTop: 5}}><Image source={{uri: story.thumbnail}} style={{width: 200, height: 100, padding: 10}} /></Text>
+        <Text style={{marginTop: 5}}>
+            <Image 
+                source={{uri: story.thumbnail}} 
+                style={{width: 200, height: 100, padding: 10}} 
+            />
+        </Text>
         <Text>{story.title}</Text>
       </Callout>
     </Marker>
