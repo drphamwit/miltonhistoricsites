@@ -15,7 +15,11 @@ const Map = () => {
       setStories(response.items)
       setLoading(false)
     })
-    Geolocation.getCurrentPosition(location => setCurrentPosition({ latitude: location.coords.latitude, longitude: location.coords.longitude}))
+    Geolocation.getCurrentPosition(location => {
+      setCurrentPosition({ latitude: location.coords.latitude, longitude: location.coords.longitude})
+    },
+    error => console.log(error)
+    )
   }, [])
 
 
