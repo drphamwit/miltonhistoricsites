@@ -1,8 +1,9 @@
 import React from 'react'
 import { Text, View, StyleSheet, Image, FlatList } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import haversine from '../../../utils/haversine'
 
-const StoryItem = ( { item, selectedCallback } ) => {
+const StoryItem = ( { item, selectedCallback, userLocation } ) => {
     return (
         <TouchableOpacity style={styles.listItemView} onPress={() => selectedCallback(item)}>
             <Image 
@@ -11,18 +12,25 @@ const StoryItem = ( { item, selectedCallback } ) => {
             />
             <View style={styles.text}>
                 <Text style={styles.listItemText}>{item.title}</Text>
-                <Text style={styles.distanceText}>Not too</Text>
+                <Text style={styles.distanceText}>
+                    {haversine(
+                        item.latitude, 
+                        item.longitude, 
+                        userLocation.latitude,
+                        userLocation.longitude
+                    )} mi
+                </Text>
             </View>
             
         </TouchableOpacity>
     )
 }
 
-const StoryDisplay = ( { items, selectedCallback } )  => {
+const StoryDisplay = ( { items, selectedCallback, userLocation } )  => {
 
     return (
       <FlatList data={items}
-        renderItem={({item}) => <StoryItem item={item} selectedCallback={selectedCallback} />}
+        renderItem={({item}) => <StoryItem item={item} selectedCallback={selectedCallback} userLocation={userLocation} />}
         keyExtractor={item => item.id.toString()}
       />
     )
