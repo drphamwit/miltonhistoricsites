@@ -14,7 +14,7 @@ const Stories = () => {
   const [items, setItems] = useState([])
   const [selectedItem, setSelectedItem] = useState('')
   const [loading, setLoading] = useState(true)
-  const [location, setLocation] = useState({ latitude: 42.2495, longitude: -71.0662})
+  const [location, setLocation] = useState({})
 
   const selectedCallback = item => {
     setSelectedItem(item)

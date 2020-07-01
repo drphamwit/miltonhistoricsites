@@ -8,7 +8,7 @@ import Geolocation from '@react-native-community/geolocation'
 const Map = () => {
   const [loading, setLoading] = useState(true)
   const [stories, setStories] = useState([])
-  const [currentPosition, setCurrentPosition] = useState({ latitude: 42.2495, longitude: -71.0662})
+  const [currentPosition, setCurrentPosition] = useState({})
 
   useEffect(() => {
     api.getAllStories().then(response => {
