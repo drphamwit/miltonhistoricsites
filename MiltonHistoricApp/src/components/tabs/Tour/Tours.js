@@ -1,32 +1,42 @@
 import React, { useState, useEffect } from 'react'
 import { View } from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
+import { stackNavigator, createStackNavigator } from '@react-navigation/stack'
 import api from '../../../utils/api'
 import TourDisplay from './TourDisplay'
 import SingleTour from './SingleTour'
 
 const Tab = createMaterialTopTabNavigator();
 
-const Tours = ({ navigation }) => {
-  const [items, setItems] = useState([])
-  const [selectedItem, setSelectedItem] = useState('')
+const Stack = createStackNavigator();
 
-  const selectedCallback = item => setSelectedItem(item)
-
+const TourMain = ({ items, navigation }) => {
   useEffect(() => {
-    api.getAllTours().then(response => {
-      setItems(response.tours)
-    })
-  }, [])
+    console.log(navigation);
+  })
+  return (
+  <View style={{ flex: 1 }}>
+        <TourDisplay items={items} navigation={navigation} />
+  </View>
+  )
+}
 
-  return (selectedItem) ? <SingleTour tour={selectedItem} backCallback={selectedCallback}/> 
-    : (<View style={{ flex: 1 }}>
-        <Tab.Navigator>
-          <Tab.Screen name="All">
-            {() => <TourDisplay items={items} selectedCallback={selectedCallback} />}
-          </Tab.Screen>
-        </Tab.Navigator>
-      </View>)
+const Tours = () => {
+
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false
+      }}
+    >
+      <Stack.Screen name="tourList" component={TourMain}>
+      </Stack.Screen>
+      <Stack.Screen name="tourSingle" component={SingleTour} >
+      </Stack.Screen>
+    </Stack.Navigator>
+  )
+
+    
 }
   
 

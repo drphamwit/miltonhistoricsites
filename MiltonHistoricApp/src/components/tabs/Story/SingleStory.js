@@ -41,21 +41,27 @@ const Citation = ({ author, title, id}) => {
     )
 }
 
-const SingleStory = ({ item, backCallBack }) => {
+const SingleStory = ({ navigation, route }) => {
     const [content, setContent] = useState([])
+    const [location, setLocation] = useState({})
     const [isFetching, setIsFetching] = useState(true)
 
     useEffect(() => {
-        api.getStory(item.id).then(response => {
-            setContent(response)
-            setIsFetching(false)
-        })
+        if (route.params?.id) {
+            console.log(route.params?.id)
+            api.getStory(route.params?.id).then(response => {
+                setContent(response)
+                setIsFetching(false)
+            })
+        }
+        if (route.params?.location) {
+            setLocation({ latitude: route.params?.location.latitude, longitude: route.params?.location.longitude})
+        }
     }, [])
-
     return (isFetching) ? <LoadingIcon />
         : (<ScrollView>
-            <BackButton backCallBack={backCallBack} />
-            <Image style={styles.image} source={{uri: item.fullsize}} />
+            <BackButton backCallBack={() => navigation.navigate('storyList')} />
+            <Image style={styles.image} source={{uri: Object.keys(content.files)[0]}} />
             <View style={styles.infoContainer}>
                 <Text style={styles.titleText}>{content.title}</Text>
                 <Text style={styles.subText}>{content.subtitle}</Text>
@@ -78,8 +84,8 @@ const SingleStory = ({ item, backCallBack }) => {
                     provider={PROVIDER_GOOGLE}
                     style={styles.image} 
                     region={{
-                        latitude: item.latitude,
-                        longitude: item.longitude,
+                        latitude: location.latitude,
+                        longitude: location.longitude,
                         latitudeDelta: 0.1,
                         longitudeDelta: 0.035
                     }}

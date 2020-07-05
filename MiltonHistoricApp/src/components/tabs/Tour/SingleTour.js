@@ -31,22 +31,26 @@ const Location = ({ item, length, index }) => (
 
 //  TODO Figure out the best way to aggregate full story descriptions from API
 //  TODO Replace Image with a Geolocation Map
-const SingleTour = ({ tour, backCallback }) => {
+const SingleTour = ({ navigation, route }) => {
+    const [tour, setTour] = useState({})
     const [stories, setStories] = useState([])
     const [isFetching, setIsFetching] = useState(true)
 
     useEffect(() => {
+        if (route.params?.tour) {
+            setTour(route.params?.tour)
+        }
         api.getAllStories().then(response => {
             setStories(response.items)
             setIsFetching(false)
         })
-    })
+    }, [])
 
 
     return (isFetching) ? <LoadingIcon />
     : (
         <ScrollView>
-          <BackButton backCallBack={backCallback}/>
+          <BackButton backCallBack={() => {navigation.navigate("tourList")}}/>
           <Image style={styles.image} source={{uri: tour.tour_img}} />
           <View style={styles.titleContainer}>
             <Text style={styles.title}>{tour.title}</Text>

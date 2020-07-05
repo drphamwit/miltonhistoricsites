@@ -1,21 +1,30 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { FlatList, StyleSheet, View, Text } from 'react-native'
-import { TouchableOpaciy, TouchableOpacity } from 'react-native-gesture-handler'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import api from '../../../utils/api'
 
 const getSubDescr = description => description.substring(0,description.indexOf("<br>"))
 
-const TourItem = ({ tour, selectedCallback }) => (
-    <TouchableOpacity style={styles.container} onPress={() => selectedCallback(tour)}>
+const TourItem = ({ tour, navigation }) => (
+    <TouchableOpacity style={styles.container} onPress={() => navigation.navigate("tourSingle", { tour: tour})}>
         <Text style={styles.title}>{tour.title}</Text>
         <Text>{tour.items.length} Locations - Curated by {tour.creator}</Text>
         <Text style={styles.description}>{getSubDescr(tour.description)}</Text>
     </TouchableOpacity>
 )
 
-const TourDisplay = ( { items, selectedCallback } )  => {
+const TourDisplay = ( { navigation } )  => {
+    const [items, setItems] = useState([])
+
+    useEffect(() => {
+        api.getAllTours().then(response => {
+            setItems(response.tours)
+        })
+    }, [])
+
     return (
       <FlatList data={items}
-        renderItem={({item}) => <TourItem tour={item} selectedCallback={selectedCallback} />}
+        renderItem={({item}) => <TourItem tour={item} navigation={navigation} />}
         keyExtractor={item => item.id.toString()}
       />
     )
