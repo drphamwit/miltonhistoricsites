@@ -11,9 +11,6 @@ const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
 
 const TourMain = ({ items, navigation }) => {
-  useEffect(() => {
-    console.log(navigation);
-  })
   return (
   <View style={{ flex: 1 }}>
         <TourDisplay items={items} navigation={navigation} />

@@ -48,7 +48,6 @@ const SingleStory = ({ navigation, route }) => {
 
     useEffect(() => {
         if (route.params?.id) {
-            console.log(route.params?.id)
             api.getStory(route.params?.id).then(response => {
                 setContent(response)
                 setIsFetching(false)
