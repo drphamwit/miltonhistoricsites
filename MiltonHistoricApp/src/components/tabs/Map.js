@@ -5,18 +5,17 @@ import LoadingIcon from '../misc/LoadingIcon'
 import StoryMarker from './Story/StoryMarker'
 import Geolocation from '@react-native-community/geolocation'
 
-const Map = () => {
+const Map = ({ navigation }) => {
   const [loading, setLoading] = useState(true)
   const [stories, setStories] = useState([])
-  const [currentPosition, setCurrentPosition] = useState({})
-
+  const [currentPosition, setCurrentPosition] = useState({ latitude: 42.2495, longitude: -71.0662})
   useEffect(() => {
     api.getAllStories().then(response => {
       setStories(response.items)
       setLoading(false)
     })
     Geolocation.getCurrentPosition(location => {
-      setCurrentPosition({ latitude: location.coords.latitude, longitude: location.coords.longitude})
+      //setCurrentPosition({ latitude: location.coords.latitude, longitude: location.coords.longitude})
     },
     error => console.log(error)
     )
@@ -40,7 +39,7 @@ const Map = () => {
         showsUserLocation={true}
         followsUserLocation={true}
       >
-        {stories.map(story => <StoryMarker key={story.title} story={story} />)}
+        {stories.map(story => <StoryMarker key={story.title} story={story} navigation={navigation} />)}
       </MapView>
   )
 }

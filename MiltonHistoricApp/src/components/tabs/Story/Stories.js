@@ -7,6 +7,7 @@ import SingleStory from './SingleStory'
 import api from '../../../utils/api'
 import Geolocation from '@react-native-community/geolocation'
 import LoadingIcon from '../../misc/LoadingIcon'
+import { startClock } from 'react-native-reanimated'
 
 
 const Stack = createStackNavigator();
@@ -16,7 +17,6 @@ const StoryList = ({ navigation }) => {
   const [items, setItems ] = useState([])
   const [loading, setLoading] = useState(true)
   const [location, setLocation] = useState({})
-
 
   selectedCallback = item => {
     navigation.navigate('storySingle', { id: item.id, location: location})
@@ -53,16 +53,19 @@ const StoryList = ({ navigation }) => {
 
 
 
-const Stories = () => (
-    <Stack.Navigator
+const Stories = ({ navigation, route}) => {
+  const [initialRoute, setInitialRoute] = useState((route.params?.story) ? 'storySingle': 'storyList')
+
+  return (
+    <Stack.Navigator initialRouteName={initialRoute}
       screenOptions={{
         headerShown: false
       }}
     >
       <Stack.Screen name="storyList" component={StoryList} />
-      <Stack.Screen name="storySingle" component={SingleStory} />
+      <Stack.Screen name="storySingle" component={SingleStory} initialParams={{ id: route.params?.story.id, location: route.params?.location }}/>
     </Stack.Navigator>
 )
-  
+}
 
 export default Stories
