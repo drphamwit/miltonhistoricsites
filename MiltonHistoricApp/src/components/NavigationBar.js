@@ -35,6 +35,7 @@ function NavigationBar() {
                     return <FontAwesome5 name={iconName} color={color}/>
                 }
             })}
+            unmountInactiveRoutes={true}
         >
             <Tab.Screen name="Map" component={Map} />
             <Tab.Screen name="Stories" component={Stories} />

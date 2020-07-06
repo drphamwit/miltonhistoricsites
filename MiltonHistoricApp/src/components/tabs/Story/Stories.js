@@ -7,19 +7,21 @@ import SingleStory from './SingleStory'
 import api from '../../../utils/api'
 import Geolocation from '@react-native-community/geolocation'
 import LoadingIcon from '../../misc/LoadingIcon'
+import { useIsFocused, useNavigation } from '@react-navigation/native'
 import { startClock } from 'react-native-reanimated'
+import SingleTour from '../Tour/SingleTour'
 
 
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
-const StoryList = ({ navigation }) => {
+const StoryList = ({ navigation, route }) => {
   const [items, setItems ] = useState([])
   const [loading, setLoading] = useState(true)
   const [location, setLocation] = useState({})
 
-  selectedCallback = item => {
-    navigation.navigate('storySingle', { id: item.id, location: location})
+  const selectedCallback = id => {
+    navigation.push('storySingle', { id: id , location: location, shouldGoBack: false})
   }
 
   useEffect(() => {
@@ -27,8 +29,8 @@ const StoryList = ({ navigation }) => {
       setItems(response.items)
       setLoading(false)
     })
-    Geolocation.getCurrentPosition(loc => setLocation({ latitude: loc.coords.latitude, longitude: loc.coords.longitude }))
-  }, [])
+      Geolocation.getCurrentPosition(loc => setLocation({ latitude: loc.coords.latitude, longitude: loc.coords.longitude }))
+  }, [route.params?.id])
 
   if (loading) {
     return <LoadingIcon />
@@ -51,19 +53,26 @@ const StoryList = ({ navigation }) => {
   ) 
 }
 
+const Stories = ({ navigation, route }) => {
+  const [storyID, setStoryID] = useState()
 
-
-const Stories = ({ navigation, route}) => {
-  const [initialRoute, setInitialRoute] = useState((route.params?.story) ? 'storySingle': 'storyList')
+  useEffect(() => {
+    navigation.addListener('focus', () => {
+      if (route.params?.id) {
+        console.log('new story id', route.params?.id)
+        setStoryID(route.params?.id)
+      }
+    })
+  }, [route.params?.id])
 
   return (
-    <Stack.Navigator initialRouteName={initialRoute}
+    <Stack.Navigator
       screenOptions={{
         headerShown: false
       }}
     >
-      <Stack.Screen name="storyList" component={StoryList} />
-      <Stack.Screen name="storySingle" component={SingleStory} initialParams={{ id: route.params?.story.id, location: route.params?.location }}/>
+      <Stack.Screen name="storyList" component={StoryList} initialParams={{ id: 1 }}/>
+      <Stack.Screen name="storySingle" component={SingleStory} />
     </Stack.Navigator>
 )
 }

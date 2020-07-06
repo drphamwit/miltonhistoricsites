@@ -7,7 +7,7 @@ const StoryMarker = ({ story, navigation }) => (
     <Marker
       coordinate={{ latitude: story.latitude, longitude: story.longitude}}
     >
-      <Callout onPress={() => navigation.navigate('Stories', { story: story, location: {latitude: story.latitude, longitude: story.longitude}})}>
+      <Callout onPress={() => navigation.navigate('Stories', { story: story, location: {latitude: story.latitude, longitude: story.longitude}, shouldGoBack: true})}>
           <Text style={{marginTop: 5}}>
             <Image 
                 source={{uri: story.thumbnail}} 

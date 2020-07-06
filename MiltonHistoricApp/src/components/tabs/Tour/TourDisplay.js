@@ -6,7 +6,7 @@ import api from '../../../utils/api'
 const getSubDescr = description => description.substring(0,description.indexOf("<br>"))
 
 const TourItem = ({ tour, navigation }) => (
-    <TouchableOpacity style={styles.container} onPress={() => navigation.navigate("tourSingle", { tour: tour})}>
+    <TouchableOpacity style={styles.container} onPress={() => navigation.push("tourSingle", { tour: tour})}>
         <Text style={styles.title}>{tour.title}</Text>
         <Text>{tour.items.length} Locations - Curated by {tour.creator}</Text>
         <Text style={styles.description}>{getSubDescr(tour.description)}</Text>
