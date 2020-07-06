@@ -7,7 +7,7 @@ Website: http://miltonhistoricsites.org/
 The Milton Historic Commission is working to expand the city's commitment to historic preservation by identifying, researching, and requesting historic district designation for several areas. Their main goal is to generate public enthusiasm about Milton's history. We would like to develop a mobile application that allows users to create geolocated entries for various historical sites and allows the importation of documents, images, videos, and other media. We aim to offer a low cost of maintenance solution for cities and make it accessible to everyone. This model, if successful, could be replicated to other cities for people to learn and appreciate the deep and fascinating history of those cities around the US.
 
 ## Getting started
-### Environmnet setup
+### Environment setup
 Before you attempt to clone the project, it is important to get your react native development environment ready. Instructions for different operating systems can be found in the following link: https://reactnative.dev/docs/environment-setup this project uses react-native cli so make sure to navigate to the react-native cli tab in the provided link (expo is selected by default, the project will not run with expo). Follow the instructions carefully. Once this is complete we can proceed with cloning the project.
 
 Open a terminal session. If you are on windows I would reccomend using git bash as some commands we will be using are not compatible with windows cmd
@@ -114,6 +114,9 @@ Python: https://github.com/wcaleb/omekadd
 
 ## Getting data in JSON format
 ?output=mobile-json
+
+## Map Integration
+[Documentation](mapintegration.md)
 
 ## References
 https://github.com/CPHDH/Curatescape  
