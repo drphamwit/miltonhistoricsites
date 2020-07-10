@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { View } from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import { stackNavigator, createStackNavigator } from '@react-navigation/stack'
-import api from '../../../utils/api'
 import TourDisplay from './TourDisplay'
 import SingleTour from './SingleTour'
 

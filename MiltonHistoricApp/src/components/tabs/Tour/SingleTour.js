@@ -36,18 +36,18 @@ const Location = ({ item, length, index }) => (
 const SingleTour = ({ navigation, route }) => {
     const [tour, setTour] = useState({})
     const [stories, setStories] = useState([])
-		const [isFetching, setIsFetching] = useState(true)
-		const [currentPosition, setCurrentPosition] = useState({ latitude: 42.2495, longitude: -71.0662})
-    console.log('re-render')
+	const [isFetching, setIsFetching] = useState(true)
+    const [currentPosition, setCurrentPosition] = useState({})
+    
     useEffect(() => {
         if (route.params?.tour) {
-						setTour(route.params?.tour)
+					setTour(route.params?.tour)
 				}
 				if (tour.items) {
 					multipleRequest()
 				}
 				Geolocation.getCurrentPosition(location => {
-					//setCurrentPosition({ latitude: location.coords.latitude, longitude: location.coords.longitude})
+					setCurrentPosition({ latitude: location.coords.latitude, longitude: location.coords.longitude})
 				})
 		}, [tour])
 		

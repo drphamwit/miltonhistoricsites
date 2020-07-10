@@ -50,7 +50,6 @@ const SingleStory = ({ navigation, route }) => {
     const [isFetching, setIsFetching] = useState(true)
     const [tours, setTours] = useState([])
     useEffect(() => {
-            console.log(route.params?.id)
             Promise.all([
                 api.getStory(route.params?.id).then(response => {
                     setContent(response)
