@@ -6,6 +6,7 @@ import LoadingIcon from '../../misc/LoadingIcon'
 import BackButton from '../../misc/BackButton'
 import moment from 'moment'
 import StoryMarker from './StoryMarker'
+import Geolocation from '@react-native-community/geolocation'
 
 const width = Dimensions.get('window').width
 
@@ -48,9 +49,8 @@ const SingleStory = ({ navigation, route }) => {
     const [location, setLocation] = useState({})
     const [isFetching, setIsFetching] = useState(true)
     const [tours, setTours] = useState([])
-
     useEffect(() => {
-        if (route.params?.id) {
+            console.log(route.params?.id)
             Promise.all([
                 api.getStory(route.params?.id).then(response => {
                     setContent(response)
@@ -61,12 +61,12 @@ const SingleStory = ({ navigation, route }) => {
             ])
             .then((values) => {
                 setIsFetching(false)
-            })
-        } 
-    })
+            }) 
+        Geolocation.getCurrentPosition(loc => setLocation({ latitude: loc.coords.latitude, longitude: loc.coords.longitude }))
+    }, [route.params?.id])
     return (isFetching) ? <LoadingIcon />
         : (<ScrollView>
-            {<BackButton backCallBack={() => navigation.navigate('storyList')} />}
+            {<BackButton backCallBack={() => navigation.navigate('StoryMain')} />}
             <Image style={styles.image} source={{uri: Object.keys(content.files)[0]}} />
             <View style={styles.infoContainer}>
                 <Text style={styles.titleText}>{content.title}</Text>
@@ -90,8 +90,8 @@ const SingleStory = ({ navigation, route }) => {
                     provider={PROVIDER_GOOGLE}
                     style={styles.image} 
                     region={{
-                        latitude: 20,
-                        longitude: 20,
+                        latitude: location.latitude,
+                        longitude: location.latitude,
                         latitudeDelta: 0.1,
                         longitudeDelta: 0.035
                     }}

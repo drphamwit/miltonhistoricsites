@@ -38,7 +38,7 @@ const SingleTour = ({ navigation, route }) => {
     const [stories, setStories] = useState([])
 		const [isFetching, setIsFetching] = useState(true)
 		const [currentPosition, setCurrentPosition] = useState({ latitude: 42.2495, longitude: -71.0662})
-
+    console.log('re-render')
     useEffect(() => {
         if (route.params?.tour) {
 						setTour(route.params?.tour)
@@ -49,7 +49,7 @@ const SingleTour = ({ navigation, route }) => {
 				Geolocation.getCurrentPosition(location => {
 					//setCurrentPosition({ latitude: location.coords.latitude, longitude: location.coords.longitude})
 				})
-		}, [tour, stories])
+		}, [tour])
 		
 		const multipleRequest = () => {
 			const items = tour.items.map(story => story.id)

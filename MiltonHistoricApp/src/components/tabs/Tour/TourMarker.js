@@ -6,7 +6,7 @@ const TourMarker = ({ story, navigation }) => {
    return (<Marker
       coordinate={{ latitude: story.latitude, longitude: story.longitude}}
     >
-      <Callout onPress={() => navigation.jumpTo('Stories', { id: story.id, location: {latitude: story.latitude, longitude: story.longitude, shouldGoBack: true,}})}>
+      <Callout onPress={() => navigation.navigate('Stories', { screen: 'SingleStory', params: { id: story.id }})}>
         <View style={{flexDirection: 'row'}}>
         <View style={styles.circle}>
             <Text>
