@@ -5,7 +5,7 @@ import haversine from '../../../utils/haversine'
 
 const StoryItem = ( { item, selectedCallback, userLocation } ) => {
     return (
-        <TouchableOpacity style={styles.listItemView} onPress={() => selectedCallback(item)}>
+        <TouchableOpacity style={styles.listItemView} onPress={() => selectedCallback(item.id)}>
             <Image 
                 style={styles.listImage}
                 source={{uri: item.thumbnail}}

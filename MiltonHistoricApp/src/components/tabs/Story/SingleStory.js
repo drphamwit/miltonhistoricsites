@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import { ScrollView, View, Image, Text, StyleSheet, Dimensions, Linking } from 'react-native'
+import { ScrollView, View, Image, Text, StyleSheet, Dimensions, Linking, Button } from 'react-native'
 import MapView, { PROVIDER_GOOGLE, Marker} from 'react-native-maps'
 import api from '../../../utils/api'
 import LoadingIcon from '../../misc/LoadingIcon'
 import BackButton from '../../misc/BackButton'
 import moment from 'moment'
 import StoryMarker from './StoryMarker'
+import Geolocation from '@react-native-community/geolocation'
 
 const width = Dimensions.get('window').width
+
+const findRelatedTours = (tours, id) => tours.filter(tour => tour.items.find(story => story.id === id))
 
 const getNewDate = d => moment(d).format("MMM D YYYY")
 
@@ -41,21 +44,29 @@ const Citation = ({ author, title, id}) => {
     )
 }
 
-const SingleStory = ({ item, backCallBack }) => {
+const SingleStory = ({ navigation, route }) => {
     const [content, setContent] = useState([])
+    const [location, setLocation] = useState({})
     const [isFetching, setIsFetching] = useState(true)
-
+    const [tours, setTours] = useState([])
     useEffect(() => {
-        api.getStory(item.id).then(response => {
-            setContent(response)
-            setIsFetching(false)
-        })
-    }, [])
-
+            Promise.all([
+                api.getStory(route.params?.id).then(response => {
+                    setContent(response)
+                }),
+                api.getAllTours().then(response => {
+                    setTours(response.tours)
+                })
+            ])
+            .then((values) => {
+                setIsFetching(false)
+            }) 
+        Geolocation.getCurrentPosition(loc => setLocation({ latitude: loc.coords.latitude, longitude: loc.coords.longitude }))
+    }, [route.params?.id])
     return (isFetching) ? <LoadingIcon />
         : (<ScrollView>
-            <BackButton backCallBack={backCallBack} />
-            <Image style={styles.image} source={{uri: item.fullsize}} />
+            {<BackButton backCallBack={() => navigation.navigate('StoryMain')} />}
+            <Image style={styles.image} source={{uri: Object.keys(content.files)[0]}} />
             <View style={styles.infoContainer}>
                 <Text style={styles.titleText}>{content.title}</Text>
                 <Text style={styles.subText}>{content.subtitle}</Text>
@@ -78,8 +89,8 @@ const SingleStory = ({ item, backCallBack }) => {
                     provider={PROVIDER_GOOGLE}
                     style={styles.image} 
                     region={{
-                        latitude: item.latitude,
-                        longitude: item.longitude,
+                        latitude: location.latitude,
+                        longitude: location.latitude,
                         latitudeDelta: 0.1,
                         longitudeDelta: 0.035
                     }}
@@ -96,6 +107,7 @@ const SingleStory = ({ item, backCallBack }) => {
                 <Citation author={content.creator} title={content.title} id={content.id} />
                 <View style={styles.subGroup}>
                     <Text style={styles.header}>Related Tours:</Text>
+                    {findRelatedTours(tours, content.id).map(tour => <Text style={styles.tourButton} key={tour.id}>{tour.title ? tour.title : ''}</Text>)}
                 </View>
                 <View style={styles.subGroup}>
                     <Text style={styles.header}>Subjects:</Text>
@@ -184,6 +196,13 @@ const styles = StyleSheet.create({
     box: {
         borderColor: 'black',
         backgroundColor: 'lightgray',
+    },
+    tourButton: {
+        backgroundColor: 'black',
+        maxWidth: 100,
+        padding: 5,
+        color: 'white',
+        fontSize: 10
     }
 })
 export default SingleStory

@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { Text, View, StyleSheet, Image, Dimensions } from 'react-native'
+import { Text, View, StyleSheet, Dimensions } from 'react-native'
+import MapView, { PROVIDER_GOOGLE} from 'react-native-maps'
 import { ScrollView } from 'react-native-gesture-handler'
+import Geolocation from '@react-native-community/geolocation'
 import LoadingIcon from '../../misc/LoadingIcon'
 import BackButton from '../../misc/BackButton'
+import TourMarker from './TourMarker'
 import api from '../../../utils/api'
 
 const width = Dimensions.get('window').width
@@ -24,30 +27,61 @@ const Location = ({ item, length, index }) => (
         <ConnectedLine number={index+1} length={length}/>
         <View style={styles.content}>
             <Text style={styles.title}>{item.title}</Text>
-            <Text style={styles.description}>{item.description}</Text>
+            <Text style={styles.storyDescription}>{item.description.split(' ').slice(0,30).join(' ')} ...</Text>
         </View>
     </View> 
 )
 
 //  TODO Figure out the best way to aggregate full story descriptions from API
-//  TODO Replace Image with a Geolocation Map
-const SingleTour = ({ tour, backCallback }) => {
+const SingleTour = ({ navigation, route }) => {
+    const [tour, setTour] = useState({})
     const [stories, setStories] = useState([])
-    const [isFetching, setIsFetching] = useState(true)
-
+	const [isFetching, setIsFetching] = useState(true)
+    const [currentPosition, setCurrentPosition] = useState({})
+    
     useEffect(() => {
-        api.getAllStories().then(response => {
-            setStories(response.items)
-            setIsFetching(false)
-        })
-    })
+        if (route.params?.tour) {
+					setTour(route.params?.tour)
+				}
+				if (tour.items) {
+					multipleRequest()
+				}
+				Geolocation.getCurrentPosition(location => {
+					setCurrentPosition({ latitude: location.coords.latitude, longitude: location.coords.longitude})
+				})
+		}, [tour])
+		
+		const multipleRequest = () => {
+			const items = tour.items.map(story => story.id)
+			let promises = []
+			for (let i = 0; i < items.length; i++) {
+				promises.push(api.getStory(items[i]))
+			}
 
+			Promise.all(promises)
+			.then(results => {
+				setStories(results)
+				setIsFetching(false)
+			})
+		}
 
     return (isFetching) ? <LoadingIcon />
     : (
         <ScrollView>
-          <BackButton backCallBack={backCallback}/>
-          <Image style={styles.image} source={{uri: tour.tour_img}} />
+          <BackButton backCallBack={() => {navigation.navigate("tourList")}}/>
+          <MapView 
+            style={styles.map}
+            provider={PROVIDER_GOOGLE}
+            region={{
+              latitude: currentPosition.latitude,
+              longitude: currentPosition.longitude,
+              latitudeDelta: 0.3,
+              longitudeDelta: 0.035
+            }}
+            showsUserLocation={true}
+          >
+             {stories.map(story => <TourMarker key={story.id} story={story} navigation={navigation}/>)} 
+          </MapView>
           <View style={styles.titleContainer}>
             <Text style={styles.title}>{tour.title}</Text>
             <Text style={styles.creator}>Curated by {tour.creator}</Text>
@@ -95,7 +129,7 @@ const styles = StyleSheet.create({
     },
     story: {
         flex: 1,
-        flexDirection: 'row'
+				flexDirection: 'row',
     },
     content: {
         paddingTop: 20,
@@ -112,14 +146,21 @@ const styles = StyleSheet.create({
         paddingTop: 15,
         alignItems: "center"
     },
-    image: {
+    map: {
         padding: 70,
         width: width,
         aspectRatio: 1.5
     },
     creator: {
         paddingTop: 15
-    }
+		},
+		storyDescription: {
+			flex: 1,
+			flexWrap: 'wrap',
+			paddingTop: 5,
+			maxWidth: 250
+			
+		}
 })
 
 export default SingleTour
