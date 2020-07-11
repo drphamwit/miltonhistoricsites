@@ -7,6 +7,7 @@ import SingleStory from './SingleStory'
 import api from '../../../utils/api'
 import Geolocation from '@react-native-community/geolocation'
 import LoadingIcon from '../../misc/LoadingIcon'
+import { sortByDate, sortByDistance } from '../../../utils/utils'
 
 
 const Stack = createStackNavigator();
@@ -37,10 +38,10 @@ const StoryList = ({ navigation }) => {
   <View style={{ flex: 1 }}>
     <Tab.Navigator>
       <Tab.Screen name="Recent">
-        {() => <StoryDisplay items={items} selectedCallback={selectedCallback} userLocation={location}/>}
+        {() => <StoryDisplay items={sortByDate(items)} selectedCallback={selectedCallback} userLocation={location}/>}
       </Tab.Screen>
       <Tab.Screen name="Nearby" >
-        {() => <StoryDisplay items={items} selectedCallback={selectedCallback} userLocation={location} />}
+        {() => <StoryDisplay items={sortByDistance(items, location)} selectedCallback={selectedCallback} userLocation={location} />}
       </Tab.Screen>
       <Tab.Screen name="Featured">
         {() => <StoryDisplay items={items.filter(item => item.featured == 1)} selectedCallback={selectedCallback} userLocation={location} />}

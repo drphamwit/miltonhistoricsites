@@ -41,3 +41,5 @@ jest.mock('@react-native-community/geolocation', () => {
     }
   )
 })
+
+jest.mock('react-native/Libraries/Animated/src/NativeAnimatedHelper');
