@@ -3,7 +3,7 @@ name: Continuous Integration
 on:
   pull_request:
     branches: [ master ]
-    paths: "*/MiltonHistoricApp/**"
+    paths: "MiltonHistoricApp/**"
 
 jobs:
   test_pull_request:
@@ -16,6 +16,11 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 12
-    - run: npm ci
-    - run: npm test
+    - name: NPM CI
+      working-directory: ./MiltonHistoricApp
+      run: npm ci
+      
+    - name: npm test
+      working-directory: ./MiltonHistoricApp
+      run: npm test
 
