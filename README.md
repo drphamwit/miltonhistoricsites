@@ -10,7 +10,7 @@ The Milton Historic Commission is working to expand the city's commitment to his
 ### Environment setup
 Before you attempt to clone the project, it is important to get your react native development environment ready. Instructions for different operating systems can be found in the following link: https://reactnative.dev/docs/environment-setup this project uses react-native cli so make sure to navigate to the react-native cli tab in the provided link (expo is selected by default, the project will not run with expo). Follow the instructions carefully. Once this is complete we can proceed with cloning the project.
 
-Open a terminal session. If you are on windows I would reccomend using git bash as some commands we will be using are not compatible with windows cmd
+Open a terminal session. If you are on windows I would reccomend using git bash as some commands we will be using are not compatible with windows cmd.
 
 Clone the repository by running the following command: 
 
