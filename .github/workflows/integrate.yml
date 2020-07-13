@@ -2,17 +2,20 @@ name: Continuous Integration
 
 on:
   pull_request:
-	branches: [ master ]
-	paths: "MiltonHistoricApp/**"
+    branches: [ master ]
+    paths: "MiltonHistoricApp/**"
 
 jobs:
-    test_pull_request:
-	runs-on: ubuntu-latest
-	steps:
-	    -uses: actions/checkout@v2
-	    -uses: action/setup-node@v1
-	        with:
-		    node-version: 12
-	    -run: npm ci
-	    -run: npm test
+  test_pull_request:
+    
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12
+    - run: npm ci
+    - run: npm test
 
