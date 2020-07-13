@@ -19,6 +19,9 @@ const api = {
     getTour(id) {
         const url = `${BASE_PATH}/tours/show/${id}${OUTPUT_TYPE}`
         return fetchData(url)
+    },
+    search(query) {
+        const url = `${BASE_PATH}/items/browse?}`
     }
 }
 
