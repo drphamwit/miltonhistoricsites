@@ -1,3 +1,5 @@
+![Continuous Integration](https://github.com/drphamwit/miltonhistoricsites/workflows/Continuous%20Integration/badge.svg)
+
 # Milton Historic Sites
 Mobile app for Milton historic sites  
 Website: http://miltonhistoricsites.org/
