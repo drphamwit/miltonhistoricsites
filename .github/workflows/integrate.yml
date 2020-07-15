@@ -20,11 +20,7 @@ jobs:
       working-directory: ./MiltonHistoricApp
       run: npm ci
       
-    - name: npm build
-      working-directory: ./MiltonHistoricApp
-      run: npm start
-      
     - name: npm test
       working-directory: ./MiltonHistoricApp
       run: npm test
-
+        
