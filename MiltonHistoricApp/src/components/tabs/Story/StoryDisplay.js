@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, View, StyleSheet, Image, FlatList } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import haversine from '../../../utils/haversine'
+import { haversine } from '../../../utils/utils'
 
 const StoryItem = ( { item, selectedCallback, userLocation } ) => {
     return (
