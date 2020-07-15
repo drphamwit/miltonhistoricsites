@@ -16,9 +16,13 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 12
-    - name: NPM CI
+    - name: npm install
       working-directory: ./MiltonHistoricApp
       run: npm ci
+    
+    - name: npm build
+      working-directory: ./MiltonHistoricApp
+      run: npm run build --if-present
       
     - name: npm test
       working-directory: ./MiltonHistoricApp
