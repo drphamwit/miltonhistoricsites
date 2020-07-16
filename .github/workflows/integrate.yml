@@ -1,12 +1,15 @@
 name: Continuous Integration
 
 on:
+  push:
+    branches: [ master ]
+    paths: "MiltonHistoricApp/**"
   pull_request:
     branches: [ master ]
     paths: "MiltonHistoricApp/**"
 
 jobs:
-  test_pull_request:
+  build_and_test:
     
     runs-on: ubuntu-latest
     
