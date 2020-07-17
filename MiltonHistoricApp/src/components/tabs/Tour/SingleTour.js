@@ -7,6 +7,7 @@ import LoadingIcon from '../../misc/LoadingIcon'
 import BackButton from '../../misc/BackButton'
 import TourMarker from './TourMarker'
 import api from '../../../utils/api'
+import { getUserLocation } from '../../../utils/utils'
 
 const width = Dimensions.get('window').width
 
@@ -48,9 +49,7 @@ const SingleTour = ({ navigation, route }) => {
 				if (tour.items) {
 					multipleRequest()
 				}
-				Geolocation.getCurrentPosition(location => {
-					setCurrentPosition({ latitude: location.coords.latitude, longitude: location.coords.longitude})
-				})
+                getUserLocation(setCurrentPosition)
 		}, [tour])
 		
 		const multipleRequest = () => {

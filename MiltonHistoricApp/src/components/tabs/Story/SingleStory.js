@@ -6,7 +6,7 @@ import LoadingIcon from '../../misc/LoadingIcon'
 import BackButton from '../../misc/BackButton'
 import moment from 'moment'
 import StoryMarker from './StoryMarker'
-import Geolocation from '@react-native-community/geolocation'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const width = Dimensions.get('window').width
 
@@ -46,7 +46,6 @@ const Citation = ({ author, title, id}) => {
 
 const SingleStory = ({ navigation, route }) => {
     const [content, setContent] = useState([])
-    const [location, setLocation] = useState({})
     const [isFetching, setIsFetching] = useState(true)
     const [tours, setTours] = useState([])
 
@@ -62,7 +61,6 @@ const SingleStory = ({ navigation, route }) => {
             .then((values) => {
                 setIsFetching(false)
             }) 
-        Geolocation.getCurrentPosition(loc => setLocation({ latitude: loc.coords.latitude, longitude: loc.coords.longitude }))
     }, [route.params?.id])
     
     return (isFetching) ? <LoadingIcon />
@@ -91,14 +89,15 @@ const SingleStory = ({ navigation, route }) => {
                     provider={PROVIDER_GOOGLE}
                     style={styles.image} 
                     region={{
-                        latitude: location.latitude,
-                        longitude: location.latitude,
+                        latitude: content.latitude,
+                        longitude: content.longitude,
                         latitudeDelta: 0.1,
                         longitudeDelta: 0.035
                     }}
-                    >
-                        <StoryMarker story={content} />  
-                    </MapView>
+                    showsUserLocation={true}
+                >
+                    <StoryMarker story={content} />  
+                </MapView>
                 <Text style={styles.italic}>{content.address}</Text>
             </View>
             <View style={styles.bottomContent}>
@@ -109,7 +108,11 @@ const SingleStory = ({ navigation, route }) => {
                 <Citation author={content.creator} title={content.title} id={content.id} />
                 <View style={styles.subGroup}>
                     <Text style={styles.header}>Related Tours:</Text>
-                    {findRelatedTours(tours, content.id).map(tour => <Text style={styles.tourButton} key={tour.id}>{tour.title ? tour.title : ''}</Text>)}
+                {findRelatedTours(tours, content.id).map(tour => (
+                    <TouchableOpacity key={tour.id} onPress={() => navigation.navigate('Tours', { screen: 'tourSingle', params: { tour: tour }})}>
+                        <Text style={styles.tourButton}>{tour.title ? tour.title : ''}</Text>
+                    </TouchableOpacity>
+                ))}
                 </View>
                 <View style={styles.subGroup}>
                     <Text style={styles.header}>Subjects:</Text>
