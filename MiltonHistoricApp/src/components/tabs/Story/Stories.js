@@ -8,9 +8,6 @@ import api from '../../../utils/api'
 import LoadingIcon from '../../misc/LoadingIcon'
 import { getUserLocation, sortByDate, sortByDistance } from '../../../utils/utils'
 
-
-const filterFeatured = (items) => items.filter(item => item.featured == 1)
-
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
