@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { View, TextInput } from 'react-native'
+import { View, TextInput, StyleSheet } from 'react-native'
 import api from '../../utils/api'
-
+import separateStoriesAndTours from '../../utils/separateStoriesAndTours'
 
 const SearchBar = ({ searchCallBack }) => {
   const [text, setText] = useState('')
@@ -12,7 +12,6 @@ const SearchBar = ({ searchCallBack }) => {
         style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
         onChangeText={text => setText(text)}
         value={text}
-        onSubmit={console.log('submitted')}
       />
     </View>
   )
@@ -34,6 +33,10 @@ const Search = () => {
       </View>
     )
 }
+
+const styles = StyleSheet.create({
+  
+})
   
 
 export default Search
