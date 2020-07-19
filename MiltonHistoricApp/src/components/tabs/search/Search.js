@@ -9,7 +9,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const width = Dimensions.get('window').width
 
-const SearchBar = ({ searchCallBack, collapseCallBack }) => {
+const SearchBar = ({ setParentText, collapseCallBack }) => {
   const [text, setText] = useState('')
   const [isHidden, setIsHidden] = useState(true);
 
@@ -18,7 +18,10 @@ const SearchBar = ({ searchCallBack, collapseCallBack }) => {
       <FontAwesome5Icon style={styles.searchIcon} name="search" />
       <TextInput
         style={styles.input}
-        onChangeText={text => setText(text)}
+        onChangeText={text => {
+          setText(text)
+          setParentText(text)
+        }}
         value={text}
       />
       <TouchableOpacity style={{ marginLeft: 10}} onPress={() => {
@@ -32,29 +35,41 @@ const SearchBar = ({ searchCallBack, collapseCallBack }) => {
 }
 const SearchMain = ({ navigation }) => {
   const [collapse, setCollapse] = useState(false)
+  const [searchText, setSearchText]= useState('')
 
-  const searchCallBack = (queryString) => {
-    navigation.navigate('SearchResult', { stories: [], tour: []})
+  const constructQueryString = () => {
+    console.log(searchText)
+    return `query=${searchText}&query_type=keyword&record_types%5B%5D=Item&record_types%5B%5D=Tour&submit_search=Search`
+  }
+  const searchCallBack = () => {
+    const queryString = constructQueryString()
+    api.search(queryString).then(response => {
+      const result = separateStoriesAndTours(response.items.map(item => {
+        return { id: item.result_id, thumbnail: item.result_thumbnail, title: item.result_title, result_type: item.result_type }
+      }))
+      console.log(result)
+      navigation.navigate('SearchResult', { stories: result.stories, tour: result.tours })
+    })
   }
 
   const collapseCallBack = () => setCollapse(!collapse)
 
     return (
-      <View style={{ flex: 1 }}>
-        <SearchBar searchCallBack={searchCallBack} collapseCallBack={collapseCallBack}/>
-        <View>
+      <View style={{ flex: 1, flexDirection: 'column' }}>
+        <SearchBar setParentText={setSearchText} collapseCallBack={collapseCallBack}/>
         {
           collapse ? 
           (
-            <Text>UnCollapse</Text>
+            <View style={{ backgroundColor: 'white', height: 300, marginTop: -200, alignItems: 'center', padding: 20}}>
+              
+            </View>
           ) : null
         }
-        </View>
         <View style={styles.submit}>
           <Button
             title='search'
             color='#fff'
-            style={styles.submit}
+            onPress={() => {searchCallBack()}}
           />
         </View>
       </View>
@@ -101,7 +116,6 @@ const styles = StyleSheet.create({
   submit: {
     backgroundColor: '#0095FF',
     margin: 40
-
   }
 })
   

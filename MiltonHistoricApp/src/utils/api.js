@@ -20,8 +20,8 @@ const api = {
         const url = `${BASE_PATH}/tours/show/${id}${OUTPUT_TYPE}`
         return fetchData(url)
     },
-    searchStories(query) {
-        const url = `${BASE_PATH}/items/search?${query}${OUTPUT_TYPE}`
+    search(query) {
+        const url = `${BASE_PATH}/search?${query}&output=mobile-json`
         return fetchData(url)
     }
 }
