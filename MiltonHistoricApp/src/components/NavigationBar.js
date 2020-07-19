@@ -5,7 +5,7 @@ import Map from './tabs/Map'
 import Stories from './tabs/Story/Stories'
 import Discover from './tabs/Discover'
 import Tours from './tabs/Tour/Tours'
-import Search from './tabs/Search'
+import Search from './tabs/search/Search'
 
 const Tab = createBottomTabNavigator()
 
