@@ -31,10 +31,10 @@ const SearchResult = ({ navigation,route }) => {
     return (
         <Tab.Navigator>
             <Tab.Screen name="Stories">
-                {() => <StoryDisplay items={stories} selectedCallback={storySelectedCallBack}/>}
+                {() => <StoryDisplay items={stories} selectedCallback={storySelectedCallBack} userLocation={location} />}
             </Tab.Screen>
             <Tab.Screen name="Tours">
-                {() => <TourDisplay items={tours} selectedCallback={tourSelectedCallBack}/>}
+                {() => <TourDisplay items={tours} selectedCallback={tourSelectedCallBack} userLocation={location} />}
             </Tab.Screen>
         </Tab.Navigator>
     )
