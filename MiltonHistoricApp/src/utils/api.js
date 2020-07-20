@@ -21,7 +21,7 @@ const api = {
         return fetchData(url)
     },
     search(query) {
-        const url = `${BASE_PATH}/search?${query}&output=mobile-json`
+        const url = `${BASE_PATH}${query}&output=mobile-json`
         return fetchData(url)
     }
 }
