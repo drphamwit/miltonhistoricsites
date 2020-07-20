@@ -34,7 +34,7 @@ export const sortByDistance = (items, location) => {
         const h1 = haversine(a.latitude, a.longitude, location.latitude, location.longitude)
         const h2 = haversine(b.latitude, b.longitude, location.latitude, location.longitude)
 
-        return (h1 - h2)
+        return h1 - h2
     })
 
     return sorted

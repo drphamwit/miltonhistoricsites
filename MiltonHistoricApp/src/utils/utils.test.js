@@ -142,11 +142,11 @@ describe('Sort by Distance', () => {
     ]
 
     it('properly sorts the points', () => {
-        const sortedPoints = sortByDistance(distances1, userLocation)
+        const sortedPoints1 = sortByDistance(distances1, userLocation)
         const sortedPoints2 = sortByDistance(distances2, userLocation)
         
-        for (let i = 0; i < sortedPoints.length; i++) {
-            expect(sortedPoints[i].id).toBe(i+1)
+        for (let i = 0; i < sortedPoints1.length; i++) {
+            expect(sortedPoints1[i].id).toBe(i+1)
         }
 
         for (let i = 0; i < sortedPoints2.length; i++) {
