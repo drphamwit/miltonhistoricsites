@@ -36,19 +36,28 @@ const SearchBar = ({ setParentText, collapseCallBack }) => {
 const SearchMain = ({ navigation }) => {
   const [collapse, setCollapse] = useState(false)
   const [searchText, setSearchText]= useState('')
+  const [featured, setFeatured] = useState('')
 
-  const constructQueryString = () => {
-    console.log(searchText)
-    return `query=${searchText}&query_type=keyword&record_types%5B%5D=Item&record_types%5B%5D=Tour&submit_search=Search`
+  const constructKeywordQueryString = () => {
+    const replacedSearch = searchText.replace(' ', '+')
+    return `/search?query=${searchText}&query_type=keyword&record_types%5B%5D=Item&record_types%5B%5D=Tour&submit_search=Search`
   }
+
+  const constructAdvancedQueryString = () => {
+    let url = 'items/browse?search=&advanced%5B0%5D%5B'
+    if (featured) {
+      url += `&featured=${featured === 'featured' ? '1' : '0'}`
+    }
+    return url + '&submit_search=Search+for+items'
+  }
+
   const searchCallBack = () => {
-    const queryString = constructQueryString()
+    const queryString = (collapse) ? constructAdvancedQueryString() : constructKeywordQueryString();
     api.search(queryString).then(response => {
       const result = separateStoriesAndTours(response.items.map(item => {
         return { id: item.result_id, thumbnail: item.result_thumbnail, title: item.result_title, result_type: item.result_type }
       }))
-      console.log(result)
-      navigation.navigate('SearchResult', { stories: result.stories, tour: result.tours })
+      navigation.push('SearchResult', { stories: result.stories, tours: result.tours })
     })
   }
 
@@ -60,8 +69,9 @@ const SearchMain = ({ navigation }) => {
         {
           collapse ? 
           (
-            <View style={{ backgroundColor: 'white', height: 300, marginTop: -200, alignItems: 'center', padding: 20}}>
-              
+            <View style={{ backgroundColor: 'white', height: 300, marginTop: -200, justifyContent: 'center', alignItems: 'center', padding: 20}}>
+              <View style={{ marginTop: -200, alignItems: 'center'}}>
+              </View>
             </View>
           ) : null
         }
