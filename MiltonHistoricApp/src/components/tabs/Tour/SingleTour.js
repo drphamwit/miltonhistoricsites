@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Text, View, StyleSheet, Dimensions } from 'react-native'
 import MapView, { PROVIDER_GOOGLE} from 'react-native-maps'
-import { ScrollView } from 'react-native-gesture-handler'
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
 import Geolocation from '@react-native-community/geolocation'
 import LoadingIcon from '../../misc/LoadingIcon'
 import BackButton from '../../misc/BackButton'
 import TourMarker from './TourMarker'
 import api from '../../../utils/api'
+import { getUserLocation } from '../../../utils/utils'
 
 const width = Dimensions.get('window').width
 
@@ -22,11 +23,13 @@ const ConnectedLine = ({ number, length }) => {
         </View>)
 }
 
-const Location = ({ item, length, index }) => (
+const Location = ({ navigation, item, length, index }) => (
     <View style={styles.story}>
         <ConnectedLine number={index+1} length={length}/>
         <View style={styles.content}>
-            <Text style={styles.title}>{item.title}</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('Stories', { screen: 'SingleStory', params: { id: item.id }})}>
+                <Text style={styles.title}>{item.title}</Text>
+            </TouchableOpacity>
             <Text style={styles.storyDescription}>{item.description.split(' ').slice(0,30).join(' ')} ...</Text>
         </View>
     </View> 
@@ -46,9 +49,7 @@ const SingleTour = ({ navigation, route }) => {
 				if (tour.items) {
 					multipleRequest()
 				}
-				Geolocation.getCurrentPosition(location => {
-					setCurrentPosition({ latitude: location.coords.latitude, longitude: location.coords.longitude})
-				})
+                getUserLocation(setCurrentPosition)
 		}, [tour])
 		
 		const multipleRequest = () => {
@@ -90,7 +91,7 @@ const SingleTour = ({ navigation, route }) => {
           <View style={styles.location}>
               <Text style={styles.header} >Locations for Tour</Text>
               <View style={styles.horizLine} />
-              {stories.map((item, index) => <Location key={item.id} index={index} item={item} length={tour.items.length} />)}
+              {stories.map((item, index) => <Location navigation={navigation} key={item.id} index={index} item={item} length={tour.items.length} />)}
           </View>  
         </ScrollView>
     )

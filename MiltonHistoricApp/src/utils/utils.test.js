@@ -100,23 +100,23 @@ describe('Sort by Date', () => {
 
 describe('Sort by Distance', () => {
     const userLocation = {
-        latitude: 38.898556,
-        longitude: -77.037852,
+        latitude: 42.2495,
+        longitude: -71.0662,
     }
 
-    const distances = [
+    const distances1 = [
         {
-            id: 3,
+            id: 2,
             latitude: 81.55962,
             longitude: -2.86634,
         },
         {
-            id: 2,
+            id: 1,
             latitude: 17.69523,
             longitude: -51.31967,
         },
         {
-            id: 1,
+            id: 3,
             latitude: 74.98155,
             longitude: 91.99629,
         },
@@ -128,12 +128,32 @@ describe('Sort by Distance', () => {
 
     ]
 
+    const distances2 = [
+        {
+            id: 2,
+            latitude: 42.23419445,
+            longitude: -71.108642092847
+        },
+        {
+            id: 1,
+            latitude: 42.25410995,
+            longitude: -71.07973105
+        }
+    ]
+
     it('properly sorts the points', () => {
-        const sortedPoints = sortByDistance(distances, userLocation)
+        const sortedPoints1 = sortByDistance(distances1, userLocation)
+        const sortedPoints2 = sortByDistance(distances2, userLocation)
         
-        for (let i = 0; i < sortedPoints.length; i++) {
-            expect(sortedPoints[i].id).toBe(i+1)
+        for (let i = 0; i < sortedPoints1.length; i++) {
+            expect(sortedPoints1[i].id).toBe(i+1)
+        }
+
+        for (let i = 0; i < sortedPoints2.length; i++) {
+            expect(sortedPoints2[i].id).toBe(i+1)
         }
     })
+
+
 
 })

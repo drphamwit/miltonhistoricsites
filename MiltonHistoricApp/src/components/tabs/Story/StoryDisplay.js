@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Text, View, StyleSheet, Image, FlatList } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { haversine } from '../../../utils/utils'
@@ -27,7 +27,6 @@ const StoryItem = ( { item, selectedCallback, userLocation } ) => {
 }
 
 const StoryDisplay = ( { items, selectedCallback, userLocation } )  => {
-
     return (
       <FlatList data={items}
         renderItem={({item}) => <StoryItem item={item} selectedCallback={selectedCallback} userLocation={userLocation} />}
