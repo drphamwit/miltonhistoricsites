@@ -9,39 +9,55 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const width = Dimensions.get('window').width
 
-const SearchBar = ({ setParentText, collapseCallBack }) => {
+const SearchBar = ({ searchCallBack }) => {
   const [text, setText] = useState('')
   const [isHidden, setIsHidden] = useState(true);
 
   return (
-    <View style={styles.searchSection}>
-      <FontAwesome5Icon style={styles.searchIcon} name="search" />
-      <TextInput
-        style={styles.input}
-        onChangeText={text => {
-          setText(text)
-          setParentText(text)
-        }}
-        value={text}
-      />
-      <TouchableOpacity style={{ marginLeft: 10}} onPress={() => {
-        collapseCallBack()
-        setIsHidden(!isHidden)
+    <View style={{ flex: 0 }}>
+      <View
+      style={{
+        height: 60,
+        backgroundColor: 'darkslateblue',
+        justifyContent: 'center',
+        paddingHorizontal: 5,
       }}>
-        <FontAwesome5Icon name={isHidden ? 'angle-down' : 'angle-up'} />
-      </TouchableOpacity>
+      <View
+      style={{
+        height: 40,
+        backgroundColor: 'white',
+        flexDirection: 'row',
+        padding: 5,
+        alignItems: 'center',
+      }}>
+        <FontAwesome5Icon name="search" style={{ fontSize: 20, color: '#a1a1a1' }} />
+        <TextInput 
+          placeholder="Search"  
+          style={{ fontSize:20,paddingLeft:15 }} 
+          onChangeText={value => setText(value)}
+          onSubmitEditing={keypress => searchCallBack(api.keywordSearch,text)}
+        />
+        <FontAwesome5Icon name={isHidden ? 'chevron-down' : 'chevron-up'} style={{ fontSize: 20, position: 'absolute', right: 10, color: '#a1a1a1' }} onPress={() => setIsHidden(!isHidden)}/>
+      </View>
+      </View>
+      {isHidden ?
+      <View style={{}}>
+        <View style={styles.submit}>
+          <Button
+            title='search'
+            color='#fff'
+            onPress={() => searchCallBack(api.extendedSearch, text)}
+          />
+        </View>
+      </View>
+      : null}
     </View>
   )
 }
-const SearchMain = ({ navigation }) => {
-  const [collapse, setCollapse] = useState(false)
-  const [searchText, setSearchText]= useState('')
+const Search = ({ navigation }) => {
   const [featured, setFeatured] = useState('')
-
-  const constructKeywordQueryString = () => {
-    const replacedSearch = searchText.replace(' ', '+')
-    return `/search?query=${searchText}&query_type=keyword&record_types%5B%5D=Item&record_types%5B%5D=Tour&submit_search=Search`
-  }
+  const [tours, setTours] = useState([]);
+  const [stories, setStories] = useState([])
 
   const constructAdvancedQueryString = () => {
     let url = 'items/browse?search=&advanced%5B0%5D%5B'
@@ -51,56 +67,23 @@ const SearchMain = ({ navigation }) => {
     return url + '&submit_search=Search+for+items'
   }
 
-  const searchCallBack = () => {
-    const queryString = (collapse) ? constructAdvancedQueryString() : constructKeywordQueryString();
-    api.search(queryString).then(response => {
+  const searchCallBack = (searchFun, text) => { 
+    searchFun(text).then(response => {
       const result = separateStoriesAndTours(response.items.map(item => {
+        console.log(item)
         return { id: item.result_id, thumbnail: item.result_thumbnail, title: item.result_title, result_type: item.result_type }
       }))
-      navigation.push('SearchResult', { stories: result.stories, tours: result.tours })
+      setStories(result.stories);
+      setTours(result.tours);
     })
   }
 
-  const collapseCallBack = () => setCollapse(!collapse)
-
     return (
-      <View style={{ flex: 1, flexDirection: 'column' }}>
-        <SearchBar setParentText={setSearchText} collapseCallBack={collapseCallBack}/>
-        {
-          collapse ? 
-          (
-            <View style={{ backgroundColor: 'white', height: 300, marginTop: -200, justifyContent: 'center', alignItems: 'center', padding: 20}}>
-              <View style={{ marginTop: -200, alignItems: 'center'}}>
-              </View>
-            </View>
-          ) : null
-        }
-        <View style={styles.submit}>
-          <Button
-            title='search'
-            color='#fff'
-            onPress={() => {searchCallBack()}}
-          />
-        </View>
+      <View style={{flex: 1}}>
+        <SearchBar searchCallBack={searchCallBack} />
+        <SearchResult tours={tours} stories={stories} navigation={navigation} />
       </View>
     )
-}
-
-const Stack = createStackNavigator()
-
-const Search = () => {
-
-  return (
-    <Stack.Navigator 
-      initialRouteName="Search"
-      screenOptions={{
-        headerShown: false
-      }}
-    >
-      <Stack.Screen name='Search' component={SearchMain} />
-      <Stack.Screen name='SearchResult' component={SearchResult} />
-    </Stack.Navigator>
-  )
 }
 
 const styles = StyleSheet.create({

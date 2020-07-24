@@ -5,7 +5,7 @@ import StoryDisplay from '../Story/StoryDisplay'
 import TourDisplay from '../Tour/TourDisplay'
 import LoadingIcon from '../../misc/LoadingIcon'
 import api from '../../../utils/api'
-import BackButton from '../../misc/BackButton'
+import { getUserLocation } from '../../../utils/utils'
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -70,23 +70,16 @@ const StoryDisplayWrapper = ({ items, selectedCallBack, userLocation }) => {
         <StoryDisplay items={stories} selectedCallback={selectedCallBack} userLocation={userLocation}/>
     )
 }
-const SearchResult = ({ navigation,route }) => {
-    const [stories,setStories] = useState([])
-    const [tours, setTours] = useState([])
-    const [location,setLocation] = useState([])
+const SearchResult = ({ navigation, stories, tours}) => {
+    const [location, setLocation] = useState({})
 
     useEffect(() => {
-        if (route.params?.stories) {
-            setStories(route.params?.stories)
-        }
-        if (route.params?.tours) {
-            setTours(route.params?.tours)
-        }
-        setLocation({ latitude: 0, longitude: 0})
-    }, [route.params])
+        getUserLocation(setLocation)
+        console.log('rendered')
+    }, [])
 
-    const storySelectedCallBack = (story) => {
-        navigation.navigate('Stories', { screen: 'SingleStory', params: { id: story.id}})
+    const storySelectedCallBack = (storyId) => {
+        navigation.navigate('Stories', { screen: 'SingleStory', params: { id: storyId}})
     }
 
     const tourSelectedCallBack = (tour) => {
@@ -94,8 +87,7 @@ const SearchResult = ({ navigation,route }) => {
     }
     
     return (
-        <View style={{flex: 1}}>
-            <BackButton backCallBack={() => navigation.pop()}/>
+        <View style={{ flex: 2}}>
             <Tab.Navigator>
             <Tab.Screen name="Stories">
                 {() => <StoryDisplayWrapper items={stories} selectedCallBack={storySelectedCallBack} userLocation={location} />}
