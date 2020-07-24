@@ -2,16 +2,13 @@ import React, { useState, useEffect } from 'react'
 import { View, TextInput, StyleSheet, Dimensions, Button, Text } from 'react-native'
 import api from '../../../utils/api'
 import separateStoriesAndTours from '../../../utils/separateStoriesAndTours'
-import { createStackNavigator } from '@react-navigation/stack'
 import SearchResult from './SearchResult'
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import NarrowBy from './NarrowBy'
 
-const width = Dimensions.get('window').width
-
-const SearchBar = ({ searchCallBack }) => {
+const SearchBar = ({ setParentText, searchCallBack, extendedSearchCallBack }) => {
   const [text, setText] = useState('')
-  const [isHidden, setIsHidden] = useState(true);
+  const [visible, setVisible] = useState(false);
 
   return (
     <View style={{ flex: 0 }}>
@@ -34,53 +31,47 @@ const SearchBar = ({ searchCallBack }) => {
         <TextInput 
           placeholder="Search"  
           style={{ fontSize:20,paddingLeft:15 }} 
-          onChangeText={value => setText(value)}
-          onSubmitEditing={keypress => searchCallBack(api.keywordSearch,text)}
+          onChangeText={value => {
+            setText(value)
+            setParentText(value)
+          }}
+          onSubmitEditing={keypress => searchCallBack()}
         />
-        <FontAwesome5Icon name={isHidden ? 'chevron-down' : 'chevron-up'} style={{ fontSize: 20, position: 'absolute', right: 10, color: '#a1a1a1' }} onPress={() => setIsHidden(!isHidden)}/>
+        <FontAwesome5Icon name={visible ? 'chevron-down' : 'chevron-up'} style={{ fontSize: 20, position: 'absolute', right: 10, color: '#a1a1a1' }} onPress={() => setVisible(!visible)}/>
       </View>
       </View>
-      {isHidden ?
-      <View style={{}}>
-        <View style={styles.submit}>
-          <Button
-            title='search'
-            color='#fff'
-            onPress={() => searchCallBack(api.extendedSearch, text)}
-          />
-        </View>
+      {visible ?
+      <View style={{ backgroundColor: 'darkslateblue'}}>
+        <NarrowBy searchCallBack={extendedSearchCallBack}/>
       </View>
       : null}
     </View>
   )
 }
 const Search = ({ navigation }) => {
-  const [featured, setFeatured] = useState('')
   const [tours, setTours] = useState([]);
   const [stories, setStories] = useState([])
+  const [text, setText] = useState('')
 
-  const constructAdvancedQueryString = () => {
-    let url = 'items/browse?search=&advanced%5B0%5D%5B'
-    if (featured) {
-      url += `&featured=${featured === 'featured' ? '1' : '0'}`
-    }
-    return url + '&submit_search=Search+for+items'
+  const extendedSearchCallBack = (query) => {
+    api.extendedSearch(text.replace(' ', '+') + query).then(response => {
+      setStories(response.items)
+    })
   }
 
-  const searchCallBack = (searchFun, text) => { 
-    searchFun(text).then(response => {
+  const searchCallBack = () => { 
+    api.keywordSearch(text.replace(' ', '+')).then(response => {
       const result = separateStoriesAndTours(response.items.map(item => {
-        console.log(item)
-        return { id: item.result_id, thumbnail: item.result_thumbnail, title: item.result_title, result_type: item.result_type }
+        return { id: item.result_id, thumbnail: item.result_thumbnail, title: item.result_title, result_type: item.result_type, needsFill: true }
       }))
-      setStories(result.stories);
-      setTours(result.tours);
+      setStories(result.stories)
+      setTours(result.tours)
     })
   }
 
     return (
       <View style={{flex: 1}}>
-        <SearchBar searchCallBack={searchCallBack} />
+        <SearchBar searchCallBack={searchCallBack} extendedSearchCallBack={extendedSearchCallBack} setParentText={setText} />
         <SearchResult tours={tours} stories={stories} navigation={navigation} />
       </View>
     )
@@ -106,10 +97,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     color: '#424242',
   },
-  submit: {
-    backgroundColor: '#0095FF',
-    margin: 40
-  }
 })
   
 

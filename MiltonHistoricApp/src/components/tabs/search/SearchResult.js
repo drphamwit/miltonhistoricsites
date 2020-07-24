@@ -45,7 +45,11 @@ const StoryDisplayWrapper = ({ items, selectedCallBack, userLocation }) => {
     const [stories, setStories] = useState([])
     
     useEffect(() => {
-        multipleRequest()
+        if (items && items.length > 0 && items[0].needsFill) {
+            multipleRequest()
+        } else {
+            setStories(items)
+        }
     }, [items])
 
     const multipleRequest = () => {
@@ -75,7 +79,6 @@ const SearchResult = ({ navigation, stories, tours}) => {
 
     useEffect(() => {
         getUserLocation(setLocation)
-        console.log('rendered')
     }, [])
 
     const storySelectedCallBack = (storyId) => {
