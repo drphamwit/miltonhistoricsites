@@ -28,6 +28,10 @@ const api = {
     extendedSearch(query) {
         const url = `${BASE_PATH}/items/browse?search=&advanced%5B0%5D%5B/${query}&${OUTPUT_TYPE}`
         return fetchData(url)
+    },
+    search(query) {
+        const url = `${BASE_PATH}${query}&output=mobile-json`
+        return fetchData(url)
     }
 }
 
