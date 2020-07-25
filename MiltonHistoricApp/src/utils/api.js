@@ -33,12 +33,12 @@ const api = {
         const url = `${BASE_PATH}/tours/show/${id}?${OUTPUT_TYPE}`
         return fetchData(url)
     },
-    keywordSearch(searchTerms) {
+    executeKeywordSearch(searchTerms) {
         const query = searchTerms.replace(' ', '+').replace(' ', '+') + '&query_type=keyword&record_types%5B%5D=Item&record_types%5B%5D=Tour&submit_search=Search'
         const url = `${BASE_PATH}/search?query=${query}&${OUTPUT_TYPE}`
         return fetchData(url)
     },
-    extendedSearch(text, advancedQuery) {
+    executeExtendedSearch(text, advancedQuery) {
         const url = `${BASE_PATH}/items/browse?search=${(text.replace(' ', '+').replace(' ', '+')) + advancedQuery}&submit_search=Search+for+items&${OUTPUT_TYPE}`
         return fetchData(url)
     },

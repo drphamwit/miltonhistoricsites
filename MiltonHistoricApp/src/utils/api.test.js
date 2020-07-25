@@ -155,21 +155,21 @@ describe('Keyword Search', () => {
   ]
 
   it('fetches data from correct url', () => {
-    api.keywordSearch(queryString[0])
+    api.executeKeywordSearch(queryString[0])
 
     expect(fetch).toHaveBeenCalledTimes(1)
     expect(fetch).toHaveBeenCalledWith(`${results[0]}&output=mobile-json`)
   })
 
   it('fetches data from correct url with spaces', () => {
-    api.keywordSearch(queryString[1])
+    api.executeKeywordSearch(queryString[1])
 
     expect(fetch).toHaveBeenCalledTimes(1)
     expect(fetch).toHaveBeenCalledWith(`${results[1]}&output=mobile-json`)
   })
 
   it('fetches data from the correct url with spaces at the end', () => {
-    api.keywordSearch(queryString[2])
+    api.executeKeywordSearch(queryString[2])
 
     expect(fetch).toHaveBeenCalledTimes(1)
     expect(fetch).toHaveBeenCalledWith(`${results[2]}&output=mobile-json`)
@@ -205,28 +205,28 @@ describe('Extended Search', () => {
   ]
 
   it('fetches data from the correct url', () => {
-    api.extendedSearch(searchParams[0].text, searchParams[0].searchQuery)
+    api.executeExtendedSearch(searchParams[0].text, searchParams[0].searchQuery)
 
     expect(fetch).toHaveBeenCalledTimes(1)
     expect(fetch).toHaveBeenCalledWith(results[0])
   })
 
   it('fetches data from the correct url with spaces', () => {
-    api.extendedSearch(searchParams[1].text, searchParams[1].searchQuery)
+    api.executeExtendedSearch(searchParams[1].text, searchParams[1].searchQuery)
 
     expect(fetch).toHaveBeenCalledTimes(1)
     expect(fetch).toHaveBeenCalledWith(results[1])
   })
 
   it('fetches data from the correct url with no keywords', () => {
-    api.extendedSearch(searchParams[2].text, searchParams[2].searchQuery)
+    api.executeExtendedSearch(searchParams[2].text, searchParams[2].searchQuery)
 
     expect(fetch).toHaveBeenCalledTimes(1)
     expect(fetch).toHaveBeenCalledWith(results[2])
   })
 
   it('fetches data from the correct url with no fields', () => {
-    api.extendedSearch(searchParams[3].text, searchParams[3].searchQuery)
+    api.executeExtendedSearch(searchParams[3].text, searchParams[3].searchQuery)
 
     expect(fetch).toHaveBeenCalledTimes(1)
     expect(fetch).toHaveBeenCalledWith(results[3])
