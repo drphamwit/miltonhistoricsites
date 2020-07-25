@@ -9,6 +9,7 @@ import Search from './tabs/search/Search'
 
 const Tab = createBottomTabNavigator()
 
+//  TODO    Uncomment when working on Discover Tab
 function NavigationBar() {
     return (
         <Tab.Navigator
@@ -22,6 +23,11 @@ function NavigationBar() {
                         case "Stories":
                             iconName = 'book-open'
                             break
+                        /*
+                        case "Discover":
+                            iconName = 'compass'
+                            break
+                        */
                         case "Tours":
                             iconName = 'walking'
                             break
@@ -36,6 +42,7 @@ function NavigationBar() {
         >
             <Tab.Screen name="Map" component={Map} />
             <Tab.Screen name="Stories" component={Stories} />
+            {/*<Tab.Screen name="Discover" component={Discover} />*/}
             <Tab.Screen name="Tours" component={Tours} />
             <Tab.Screen name="Search" component={Search} />
         </Tab.Navigator>
