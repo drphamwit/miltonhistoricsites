@@ -54,13 +54,13 @@ const Search = ({ navigation }) => {
   const [text, setText] = useState('')
 
   const extendedSearchCallBack = (query) => {
-    api.extendedSearch(text.replace(' ', '+') + query).then(response => {
+    api.extendedSearch(text, query).then(response => {
       setStories(response.items)
     })
   }
 
   const searchCallBack = () => { 
-    api.keywordSearch(text.replace(' ', '+')).then(response => {
+    api.keywordSearch(text).then(response => {
       const result = separateStoriesAndTours(response.items.map(item => {
         return { id: item.result_id, thumbnail: item.result_thumbnail, title: item.result_title, result_type: item.result_type, needsFill: true }
       }))
