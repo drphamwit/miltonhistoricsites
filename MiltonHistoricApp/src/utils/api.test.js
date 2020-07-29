@@ -139,3 +139,141 @@ describe('Tours', () => {
     expect(fetch).toHaveBeenCalledWith("http://miltonhistoricsites.org/tours/show/1?output=mobile-json")
   })
 })
+
+describe('Keyword Search', () => {
+
+  const queryString = [
+    'Milton Described',
+    'Tour',
+    'Historical '
+  ]
+
+  const results = [
+    'http://miltonhistoricsites.org/search?query=Milton+Described&query_type=keyword&record_types%5B%5D=Item&record_types%5B%5D=Tour&submit_search=Search',
+    'http://miltonhistoricsites.org/search?query=Tour&query_type=keyword&record_types%5B%5D=Item&record_types%5B%5D=Tour&submit_search=Search',
+    'http://miltonhistoricsites.org/search?query=Historical+&query_type=keyword&record_types%5B%5D=Item&record_types%5B%5D=Tour&submit_search=Search'
+  ]
+
+  it('fetches data from correct url', () => {
+    api.executeKeywordSearch(queryString[0])
+
+    expect(fetch).toHaveBeenCalledTimes(1)
+    expect(fetch).toHaveBeenCalledWith(`${results[0]}&output=mobile-json`)
+  })
+
+  it('fetches data from correct url with spaces', () => {
+    api.executeKeywordSearch(queryString[1])
+
+    expect(fetch).toHaveBeenCalledTimes(1)
+    expect(fetch).toHaveBeenCalledWith(`${results[1]}&output=mobile-json`)
+  })
+
+  it('fetches data from the correct url with spaces at the end', () => {
+    api.executeKeywordSearch(queryString[2])
+
+    expect(fetch).toHaveBeenCalledTimes(1)
+    expect(fetch).toHaveBeenCalledWith(`${results[2]}&output=mobile-json`)
+  })
+
+})
+
+describe('Extended Search', () => {
+  const searchParams = [
+    {
+      text: 'Demo',
+      searchQuery: '&advanced%5B0%5D%5Bjoiner%5D=and&advanced%5B0%5D%5Belement_id%5D=50&advanced%5B0%5D%5Bterms%5D=spaced+text'
+    },
+    {
+      text: 'Milton Described ',
+      searchQuery: '&advanced%5B0%5D%5Bjoiner%5D=or&advanced%5B0%5D%5Belement_id%5D=41&advanced%5B0%5D%5Bterms%5D=blahblah'
+    },
+    {
+      text: '',
+      searchQuery: '&advanced%5B0%5D%5Bjoiner%5D=&advanced%5B0%5D%5Belement_id%5D=39&advanced%5B0%5D%5Bterms%5D='
+    },
+    {
+      text: 'Described',
+      searchQuery: ''
+    },
+  ]
+
+  const results = [
+    'http://miltonhistoricsites.org/items/browse?search=Demo&advanced%5B0%5D%5Bjoiner%5D=and&advanced%5B0%5D%5Belement_id%5D=50&advanced%5B0%5D%5Bterms%5D=spaced+text&submit_search=Search+for+items&output=mobile-json',
+    'http://miltonhistoricsites.org/items/browse?search=Milton+Described+&advanced%5B0%5D%5Bjoiner%5D=or&advanced%5B0%5D%5Belement_id%5D=41&advanced%5B0%5D%5Bterms%5D=blahblah&submit_search=Search+for+items&output=mobile-json',
+    'http://miltonhistoricsites.org/items/browse?search=&advanced%5B0%5D%5Bjoiner%5D=&advanced%5B0%5D%5Belement_id%5D=39&advanced%5B0%5D%5Bterms%5D=&submit_search=Search+for+items&output=mobile-json',
+    'http://miltonhistoricsites.org/items/browse?search=Described&submit_search=Search+for+items&output=mobile-json'
+  ]
+
+  it('fetches data from the correct url', () => {
+    api.executeExtendedSearch(searchParams[0].text, searchParams[0].searchQuery)
+
+    expect(fetch).toHaveBeenCalledTimes(1)
+    expect(fetch).toHaveBeenCalledWith(results[0])
+  })
+
+  it('fetches data from the correct url with spaces', () => {
+    api.executeExtendedSearch(searchParams[1].text, searchParams[1].searchQuery)
+
+    expect(fetch).toHaveBeenCalledTimes(1)
+    expect(fetch).toHaveBeenCalledWith(results[1])
+  })
+
+  it('fetches data from the correct url with no keywords', () => {
+    api.executeExtendedSearch(searchParams[2].text, searchParams[2].searchQuery)
+
+    expect(fetch).toHaveBeenCalledTimes(1)
+    expect(fetch).toHaveBeenCalledWith(results[2])
+  })
+
+  it('fetches data from the correct url with no fields', () => {
+    api.executeExtendedSearch(searchParams[3].text, searchParams[3].searchQuery)
+
+    expect(fetch).toHaveBeenCalledTimes(1)
+    expect(fetch).toHaveBeenCalledWith(results[3])
+  })
+})
+
+describe('Build Extended Search Query string', () => {
+
+  const queryList = [
+    {
+      operation: 'and',
+      field: 'title',
+      text: 'spaced text',
+    },
+    {
+      operation: 'or',
+      field: 'creator',
+      text: 'blahblah',
+    },
+    {
+      operation: '',
+      field: 'description',
+      text: '',
+    },
+  ]
+
+  const singleQueryResults = [
+    '&advanced%5B0%5D%5Bjoiner%5D=and&advanced%5B0%5D%5Belement_id%5D=50&advanced%5B0%5D%5Bterms%5D=spaced+text',
+    '&advanced%5B0%5D%5Bjoiner%5D=or&advanced%5B0%5D%5Belement_id%5D=39&advanced%5B0%5D%5Bterms%5D=blahblah',
+    '&advanced%5B0%5D%5Bjoiner%5D=&advanced%5B0%5D%5Belement_id%5D=41&advanced%5B0%5D%5Bterms%5D='
+  ]
+
+  it('builds single queries correctly', () => {
+    const query1 = api.buildExtendedSearchQuery([queryList[0]])
+    const query2 = api.buildExtendedSearchQuery([queryList[1]])
+    const query3 = api.buildExtendedSearchQuery([queryList[2]])
+
+    expect(query1).toBe(singleQueryResults[0])
+    expect(query2).toBe(singleQueryResults[1])
+    expect(query3).toBe(singleQueryResults[2])
+  })
+
+  it('combines multiple queries correctly', () => {
+    const query1 = api.buildExtendedSearchQuery(queryList)
+    const query2 = api.buildExtendedSearchQuery(queryList.slice(0,2))
+
+    expect(query1).toBe(singleQueryResults.reduce((acc,curr) => acc + curr), '')
+    expect(query2).toBe(singleQueryResults[0] + singleQueryResults[1])
+  })
+})

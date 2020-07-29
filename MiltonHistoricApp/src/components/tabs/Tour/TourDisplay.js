@@ -5,26 +5,18 @@ import api from '../../../utils/api'
 
 const getSubDescr = description => description.substring(0,description.indexOf("<br>"))
 
-const TourItem = ({ tour, navigation }) => (
-    <TouchableOpacity style={styles.container} onPress={() => navigation.push("tourSingle", { tour: tour})}>
+const TourItem = ({ tour, selectedCallBack}) => (
+    <TouchableOpacity style={styles.container} onPress={() => selectedCallBack(tour)}>
         <Text style={styles.title}>{tour.title}</Text>
         <Text>{tour.items.length} Locations - Curated by {tour.creator}</Text>
         <Text style={styles.description}>{getSubDescr(tour.description)}</Text>
     </TouchableOpacity>
 )
 
-const TourDisplay = ( { navigation } )  => {
-    const [items, setItems] = useState([])
-
-    useEffect(() => {
-        api.getAllTours().then(response => {
-            setItems(response.tours)
-        })
-    }, [])
-
+const TourDisplay = ( { items, selectedCallBack } )  => {
     return (
       <FlatList data={items}
-        renderItem={({item}) => <TourItem tour={item} navigation={navigation} />}
+        renderItem={({item}) => <TourItem tour={item} selectedCallBack={selectedCallBack} />}
         keyExtractor={item => item.id.toString()}
       />
     )

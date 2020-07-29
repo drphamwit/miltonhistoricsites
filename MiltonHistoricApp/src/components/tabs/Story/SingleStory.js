@@ -69,7 +69,7 @@ const SingleStory = ({ navigation, route }) => {
             <Image style={styles.image} source={{uri: Object.keys(content.files)[0]}} />
             <View style={styles.infoContainer}>
                 <Text style={styles.titleText}>{content.title}</Text>
-                <Text style={styles.subText}>{content.subtitle}</Text>
+                <Text style={styles.subText}>{content.subtitle.replace('&#039;', '\'')}</Text>
                 <Text style={styles.authorText}>By {content.creator[0]}</Text>
             </View>
             <View style={styles.descriptionContainer}>
