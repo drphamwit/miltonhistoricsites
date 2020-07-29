@@ -34,7 +34,7 @@ const QueryForm = ({ addCallBack }) => {
         <View>
             <RNPickerSelect
             placeholder={{
-                label: 'Select an Expresion...',
+                label: 'Select...',
                 value: null,
                 color: '#9EA0A4'
             }}

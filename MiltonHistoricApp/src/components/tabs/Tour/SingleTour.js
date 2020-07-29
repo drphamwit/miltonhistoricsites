@@ -74,8 +74,8 @@ const SingleTour = ({ navigation, route }) => {
             style={styles.map}
             provider={PROVIDER_GOOGLE}
             region={{
-              latitude: currentPosition.latitude,
-              longitude: currentPosition.longitude,
+              latitude: tour.items[0].latitude,
+              longitude: tour.items[0].longitude,
               latitudeDelta: 0.3,
               longitudeDelta: 0.035
             }}
