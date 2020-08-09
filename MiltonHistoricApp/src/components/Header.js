@@ -1,24 +1,30 @@
 import React from 'react';
-import {View, Text, StyleSheet } from 'react-native';
+import {SafeAreaView, Text, StyleSheet, StatusBar, Platform, View } from 'react-native';
 
 const Header = ({title}) => {
+  if (Platform.OS == 'android') {
+    StatusBar.currentHeight
+    console.log(StatusBar.currentHeight)
+    
+  }
+
   return (
-    <View style={styles.header}>
+    <SafeAreaView style={styles.header}>
       <Text style={styles.text}>{title}</Text>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   header: {
-    height: 100,
-    padding: 15,
+    flex: 1,
+    padding: 0,
     backgroundColor: 'darkslateblue',
     flexDirection: 'row',
   },
   text: {
     color: 'white',
-    paddingTop: 40,
+    marginTop: 24,
     paddingLeft: 50,
     fontSize: 23,
     textAlign: 'left',
