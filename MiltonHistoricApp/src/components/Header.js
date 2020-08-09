@@ -1,13 +1,7 @@
 import React from 'react';
-import {SafeAreaView, Text, StyleSheet, StatusBar, Platform, View } from 'react-native';
+import {SafeAreaView, Text, StyleSheet } from 'react-native';
 
 const Header = ({title}) => {
-  if (Platform.OS == 'android') {
-    StatusBar.currentHeight
-    console.log(StatusBar.currentHeight)
-    
-  }
-
   return (
     <SafeAreaView style={styles.header}>
       <Text style={styles.text}>{title}</Text>
