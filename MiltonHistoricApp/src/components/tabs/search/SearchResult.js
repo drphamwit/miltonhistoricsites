@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import StoryDisplay from '../Story/StoryDisplay'
 import TourDisplay from '../Tour/TourDisplay'
@@ -90,7 +90,7 @@ const SearchResult = ({ navigation, stories, tours}) => {
     }
     
     return (
-        <View style={{ flex: 2 }}>
+        <View style={styles.container}>
             <Tab.Navigator>
             <Tab.Screen name="Stories">
                 {() => <StoryDisplayWrapper items={stories} selectedCallBack={storySelectedCallBack} userLocation={location} />}
@@ -102,5 +102,11 @@ const SearchResult = ({ navigation, stories, tours}) => {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 2
+    }
+})
 
 export default SearchResult

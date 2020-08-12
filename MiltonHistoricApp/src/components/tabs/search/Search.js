@@ -5,6 +5,7 @@ import separateStoriesAndTours from '../../../utils/separateStoriesAndTours'
 import SearchResult from './SearchResult'
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5'
 import NarrowBy from './NarrowBy'
+import { Colors } from '../../../styles/index'
 
 const SearchBar = ({ setParentText, searchCallBack, extendedSearchCallBack }) => {
   const [text, setText] = useState('')
@@ -17,7 +18,7 @@ const SearchBar = ({ setParentText, searchCallBack, extendedSearchCallBack }) =>
           <FontAwesome5Icon name="search" style={styles.searchIcon} />
           <TextInput 
             placeholder="Search"  
-            style={{ fontSize:20,paddingLeft:15 }} 
+            style={styles.textinput} 
             onChangeText={value => {
               setText(value)
               setParentText(value)
@@ -59,7 +60,7 @@ const Search = ({ navigation }) => {
   }
 
     return (
-      <View style={{flex: 1}}>
+      <View style={styles.container}>
         <SearchBar searchCallBack={searchCallBack} extendedSearchCallBack={extendedSearchCallBack} setParentText={setText} />
         <SearchResult tours={tours} stories={stories} navigation={navigation} />
       </View>
@@ -69,7 +70,7 @@ const Search = ({ navigation }) => {
 const styles = StyleSheet.create({
   searchBarContainer: {
     height: 60,
-    backgroundColor: 'darkslateblue',
+    backgroundColor: Colors.BACKGROUND,
     justifyContent: 'center',
     paddingHorizontal: 5,
   },
@@ -82,13 +83,22 @@ const styles = StyleSheet.create({
   },
   searchIcon: {
     fontSize: 20, 
-    color: '#a1a1a1'
+    color: Colors.SEARCH_ICON_COLOR
   },
   extendedSearchToggle: {
     fontSize: 20, 
     position: 'absolute', 
     right: 10, 
-    color: '#a1a1a1' 
+    color: Colors.SEARCH_ICON_COLOR 
+  },
+  textinput: {
+    fontSize:20,
+    paddingLeft:15, 
+    paddingTop: 0, 
+    paddingBottom: 0
+  },
+  container: {
+    flex: 1
   }
 })
   

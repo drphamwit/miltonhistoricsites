@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
 import StoryDisplay from './StoryDisplay'
@@ -33,7 +33,7 @@ const StoryList = ({ navigation }) => {
   }
 
   return (
-  <View style={{ flex: 1 }}>
+  <View style={styles.container}>
     <Tab.Navigator>
       <Tab.Screen name="Recent">
         {() => <StoryDisplay items={sortByDate(items)} selectedCallback={selectedCallback} userLocation={location}/>}
@@ -63,5 +63,11 @@ const Stories = ({ navigation, route }) => {
     </Stack.Navigator>
 )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  }
+})
 
 export default Stories

@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     title: {
-        fontSize: 22,
+        fontSize: 23,
         color: '#1EAEDB'
     },
     story: {

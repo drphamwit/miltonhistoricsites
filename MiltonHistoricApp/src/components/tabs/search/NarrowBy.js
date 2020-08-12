@@ -4,12 +4,13 @@ import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5'
 import { TouchableOpacity, FlatList } from 'react-native-gesture-handler'
 import RNPickerSelect from 'react-native-picker-select'
 import api from '../../../utils/api'
+import { Colors } from '../../../styles/index'
 
 const ListItem = ({ item, removeItem }) => {
     return (
         <View style={styles.container}>
-        <TouchableOpacity onPress={() => removeItem(item.item.id)} style={{padding: 10, backgroundColor: 'white'}}>
-            <FontAwesome5Icon name='trash-alt' style={{ fontSize: 20}} />
+        <TouchableOpacity onPress={() => removeItem(item.item.id)} style={styles.listItem}>
+            <FontAwesome5Icon name='trash-alt' style={styles.icon} />
         </TouchableOpacity>
             <View style={styles.container}>
                 <Text style={styles.text}>{item.item.operation ? item.item.operation : 'N/A'}</Text>
@@ -61,18 +62,13 @@ const QueryForm = ({ addCallBack }) => {
             />
             <TextInput 
                 placeholder="Enter Search Term"  
-                style={{ fontSize:16, backgroundColor: 'white', padding: 10 }} 
+                style={styles.advSearchInput} 
                 onChangeText={value => setText(value)}
             />
-            <View style={{
-                backgroundColor: '#0095FF',
-                marginTop: 20,
-                marginLeft: 120,
-                marginRight: 120,
-            }}>
+            <View style={styles.add}>
                 <Button
                 title='Add Search Query'
-                color='#fff'
+                color={(Platform.OS === 'android') ? Colors.BUTTON_COLOR : '#fff'}
                 onPress={() => addCallBack(boolDrop,fieldDrop,text)}
                 />
             </View>
@@ -91,19 +87,19 @@ const NarrowBy = ({ searchCallBack }) => {
     const removeCallBack = (id) => setTerms(terms.filter(term => term.id !== id))
 
     return (
-        <View style={{ backgroundColor: 'darkslateblue'}}>
+        <View style={styles.background}>
             <FlatList
                 data={terms}
                 renderItem={(item) => <ListItem removeItem={removeCallBack} item={item} />}
                 keyExtractor={item => item.id.toString()}
-                style={{ backgroundColor: 'darkslateblue'}}
+                style={styles.background}
             />
             <Text style={styles.searchTitleText}>Extended Search</Text>
             <QueryForm addCallBack={addCallBack} />
             <View style={styles.submit}>
                 <Button
                     title='Extended Search'
-                    color='#fff'
+                    color={(Platform.OS === 'android') ? Colors.BUTTON_COLOR : '#fff'}
                     onPress={() => {
                         searchCallBack(api.buildExtendedSearchQuery(terms))
                     }}
@@ -150,8 +146,14 @@ const styles = StyleSheet.create({
         borderLeftWidth: 1,
         backgroundColor: 'white'
     },
+    add: {
+        backgroundColor: Colors.BUTTON_COLOR,
+        marginTop: 20,
+        marginLeft: 120,
+        marginRight: 120,
+    },
     submit: {
-        backgroundColor: '#0095FF',
+        backgroundColor: Colors.BUTTON_COLOR,
         marginTop: 10,
         marginLeft: 120,
         marginRight: 120,
@@ -159,7 +161,7 @@ const styles = StyleSheet.create({
       },
       searchTitleText: {
         fontSize: 20,
-        backgroundColor: 'darkslateblue', 
+        backgroundColor: Colors.BACKGROUND, 
         color: 'white', 
         padding: 10
       },
@@ -170,6 +172,21 @@ const styles = StyleSheet.create({
         marginTop: 10, 
         borderWidth: 1, 
         borderColor: 'white'
-      }
+      },
+      background: {
+        backgroundColor: Colors.BACKGROUND
+      },
+      listItem: {
+        padding: 10, 
+        backgroundColor: 'white'
+      },
+      advSearchInput: { 
+        fontSize:16, 
+        backgroundColor: 'white', 
+        padding: 10 
+    },
+    icon: {
+        fontSize: 20
+    }
 })
 export default NarrowBy

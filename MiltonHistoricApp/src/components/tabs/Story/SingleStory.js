@@ -23,7 +23,7 @@ const LinkGroup = ({ a, title }) => {
             {a.map(tag => {
                 const link = removeTag(tag)
                 return (
-                    <Text style={{color: 'blue'}} key={link} onPress={() => Linking.openURL(link)}>
+                    <Text style={styles.linkText} key={link} onPress={() => Linking.openURL(link)}>
                         {link}
                     </Text>
                 )
@@ -76,14 +76,17 @@ const SingleStory = ({ navigation, route }) => {
                 <Text style={styles.textLede}>{content.lede}</Text>
                 <Text>{removeTag(content.description)}</Text>
             </View>
-            <View style={{backgroundColor: 'black', paddingTop: 10}}>
+            <View style={styles.imageSection}>
                 <Text style={styles.subText}>Images</Text>
                 <View style={styles.ImageViewContainer}>
-                    {Object.keys(content.files).map(url => <View style={styles.imageContainer}><Image style={styles.gridImage} key={url} source={{uri: url}} /></View>)}
-                    
+                    {Object.keys(content.files).map(url => (
+                    <View style={styles.imageContainer}>
+                        <Image style={styles.gridImage} key={url} source={{uri: url}} />
+                    </View>
+                    ))}
                 </View>
             </View>
-            <View style={{backgroundColor: 'white'}} >
+            <View style={styles.mapSection} >
                 <Text style={styles.mapTitle}>Map</Text>
                 <View style={styles.horizLine} />
                 <MapView 
@@ -111,7 +114,11 @@ const SingleStory = ({ navigation, route }) => {
                     <Text style={styles.header}>Related Tours:</Text>
                     <View style={styles.tourGroup}>
                         {findRelatedTours(tours, content.id).map(tour => (
-                        <TouchableOpacity style={{padding: 5}} key={tour.id} onPress={() => navigation.navigate('Tours', { screen: 'tourSingle', params: { tour: tour }})}>
+                        <TouchableOpacity 
+                            style={styles.buttonContainer} 
+                            key={tour.id} 
+                            onPress={() => navigation.navigate('Tours', { screen: 'tourSingle', params: { tour: tour }})}
+                        >
                             <Text style={styles.tourButton}>{tour.title ? tour.title : ''}</Text>
                         </TouchableOpacity>
                         ))}
@@ -219,6 +226,19 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         flexWrap: 'wrap'
+    },
+    linkText: {
+        color: 'blue'
+    },
+    imageSection: {
+        backgroundColor: 'black', 
+        paddingTop: 10
+    },
+    mapSection: {
+        backgroundColor: 'white'
+    },
+    buttonContainer: {
+        padding: 5
     }
 })
 export default SingleStory

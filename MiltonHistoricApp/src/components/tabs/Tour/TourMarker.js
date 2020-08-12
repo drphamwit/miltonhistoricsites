@@ -8,7 +8,7 @@ const TourMarker = ({ story, navigation }) => {
 			coordinate={{ latitude: story.latitude, longitude: story.longitude}}
     >
       <Callout onPress={() => navigation.navigate('Stories', { screen: 'SingleStory', params: { id: story.id }})}>
-        <View style={{flexDirection: 'row'}}>
+        <View style={styles.container}>
         <View style={styles.circle}>
           <Text>
             {story.id}
@@ -16,7 +16,7 @@ const TourMarker = ({ story, navigation }) => {
         </View>
         <View style={styles.calloutInfo}>
             <Text>{story.title}</Text>   
-            <Text style={{marginTop: 5}}>{story.address}</Text> 
+            <Text style={styles.address}>{story.address}</Text> 
         </View>
         </View>
       </Callout>
@@ -39,5 +39,11 @@ const styles = StyleSheet.create({
 		calloutInfo: {
 			marginTop: 10,
 			marginLeft: 4
+		},
+		address: {
+			marginTop: 5
+		},
+		container: {
+			flexDirection: 'row'
 		}
 })
