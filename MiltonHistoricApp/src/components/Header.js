@@ -1,9 +1,14 @@
 import React from 'react';
-import {SafeAreaView, Text, StyleSheet } from 'react-native';
+import {SafeAreaView, Text, StyleSheet, Platform } from 'react-native';
 
 const Header = ({title}) => {
+
+  const flexStyle = (Platform.OS === 'android') ? styles.AndroidHeader : styles.IosHeader
+
+  const headerStyle = StyleSheet.flatten([styles.header,flexStyle])
+
   return (
-    <SafeAreaView style={styles.header}>
+    <SafeAreaView style={headerStyle}>
       <Text style={styles.text}>{title}</Text>
     </SafeAreaView>
   );
@@ -11,18 +16,21 @@ const Header = ({title}) => {
 
 const styles = StyleSheet.create({
   header: {
-    flex: 1,
-    padding: 0,
     backgroundColor: 'darkslateblue',
     flexDirection: 'row',
+    alignItems: 'center',
   },
   text: {
     color: 'white',
-    marginTop: 24,
-    paddingLeft: 50,
+    marginLeft: '5%',
     fontSize: 23,
-    textAlign: 'left',
   },
+  AndroidHeader: {
+    flex: 0.1,
+  },
+  IosHeader: {
+    flex: 0.07
+  }
 });
 
 export default Header;

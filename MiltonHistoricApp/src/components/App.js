@@ -9,7 +9,7 @@ const App = () => {
   return (
       <NavigationContainer style={styles.container}>
         <Header title={"Milton Historic Sites"} />
-        <View style={{flex: 10}}>
+        <View style={styles.mainContainer}>
           <NavigationBar />
         </View>
         
@@ -20,7 +20,11 @@ const App = () => {
 export default App
 
 const styles = StyleSheet.create({
-  container: {
+  navContainer: {
     flex: 1
+  },
+  mainContainer: {
+    flex: 0.93
   }
+
 })
