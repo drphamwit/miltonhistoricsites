@@ -37,7 +37,7 @@ const TourMain = ({ navigation }) => {
   )
 }
 
-const Tours = () => {
+const Tours = ({ navigation }) => {
 
   return (
     <Stack.Navigator

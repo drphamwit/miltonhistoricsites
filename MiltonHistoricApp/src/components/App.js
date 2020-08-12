@@ -6,11 +6,12 @@ import NavigationBar from './NavigationBar'
 import Header from './Header'
 
 const App = () => {
+  const [title, setTitle] = React.useState('Mao')
   return (
       <NavigationContainer style={styles.container}>
-        <Header title={"Milton Historic Sites"} />
+        <Header title={title} />
         <View style={styles.mainContainer}>
-          <NavigationBar />
+          <NavigationBar setTitle={setTitle}/>
         </View>
         
       </NavigationContainer>

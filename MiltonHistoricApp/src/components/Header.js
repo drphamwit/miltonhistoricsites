@@ -1,5 +1,6 @@
 import React from 'react';
 import {SafeAreaView, Text, StyleSheet, Platform } from 'react-native';
+import { useRoute } from '@react-navigation/native'
 
 const Header = ({title}) => {
 
