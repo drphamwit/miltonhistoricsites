@@ -35,7 +35,6 @@ const Location = ({ navigation, item, length, index }) => (
     </View> 
 )
 
-//  TODO Figure out the best way to aggregate full story descriptions from API
 const SingleTour = ({ navigation, route }) => {
     const [tour, setTour] = useState({})
     const [stories, setStories] = useState([])

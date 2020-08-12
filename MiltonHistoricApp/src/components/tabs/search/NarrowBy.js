@@ -7,7 +7,7 @@ import api from '../../../utils/api'
 
 const ListItem = ({ item, removeItem }) => {
     return (
-        <View style={{flex: 1, flexDirection: 'row', marginBottom: 10, marginTop: 10, borderWidth: 1, borderColor: 'white'}}>
+        <View style={styles.container}>
         <TouchableOpacity onPress={() => removeItem(item.item.id)} style={{padding: 10, backgroundColor: 'white'}}>
             <FontAwesome5Icon name='trash-alt' style={{ fontSize: 20}} />
         </TouchableOpacity>
@@ -91,14 +91,14 @@ const NarrowBy = ({ searchCallBack }) => {
     const removeCallBack = (id) => setTerms(terms.filter(term => term.id !== id))
 
     return (
-        <View>
+        <View style={{ backgroundColor: 'darkslateblue'}}>
             <FlatList
                 data={terms}
                 renderItem={(item) => <ListItem removeItem={removeCallBack} item={item} />}
                 keyExtractor={item => item.id.toString()}
                 style={{ backgroundColor: 'darkslateblue'}}
             />
-            <Text style={{ fontSize: 20, backgroundColor: 'darkslateblue', color: 'white', padding: 10}}>Extended Search</Text>
+            <Text style={styles.searchTitleText}>Extended Search</Text>
             <QueryForm addCallBack={addCallBack} />
             <View style={styles.submit}>
                 <Button
@@ -156,6 +156,20 @@ const styles = StyleSheet.create({
         marginLeft: 120,
         marginRight: 120,
         marginBottom: 10
+      },
+      searchTitleText: {
+        fontSize: 20,
+        backgroundColor: 'darkslateblue', 
+        color: 'white', 
+        padding: 10
+      },
+      listContainer: {
+        flex: 1, 
+        flexDirection: 'row', 
+        marginBottom: 10, 
+        marginTop: 10, 
+        borderWidth: 1, 
+        borderColor: 'white'
       }
 })
 export default NarrowBy

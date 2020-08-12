@@ -78,8 +78,9 @@ const SingleStory = ({ navigation, route }) => {
             </View>
             <View style={{backgroundColor: 'black', paddingTop: 10}}>
                 <Text style={styles.subText}>Images</Text>
-                <View style={styles.imageContainer}>
-                    {Object.keys(content.files).map(url => <Image style={styles.gridImage} key={url} source={{uri: url}} />)}
+                <View style={styles.ImageViewContainer}>
+                    {Object.keys(content.files).map(url => <View style={styles.imageContainer}><Image style={styles.gridImage} key={url} source={{uri: url}} /></View>)}
+                    
                 </View>
             </View>
             <View style={{backgroundColor: 'white'}} >
@@ -108,11 +109,13 @@ const SingleStory = ({ navigation, route }) => {
                 <Citation author={content.creator} title={content.title} id={content.id} />
                 <View style={styles.subGroup}>
                     <Text style={styles.header}>Related Tours:</Text>
-                {findRelatedTours(tours, content.id).map(tour => (
-                    <TouchableOpacity key={tour.id} onPress={() => navigation.navigate('Tours', { screen: 'tourSingle', params: { tour: tour }})}>
-                        <Text style={styles.tourButton}>{tour.title ? tour.title : ''}</Text>
-                    </TouchableOpacity>
-                ))}
+                    <View style={styles.tourGroup}>
+                        {findRelatedTours(tours, content.id).map(tour => (
+                        <TouchableOpacity style={{padding: 5}} key={tour.id} onPress={() => navigation.navigate('Tours', { screen: 'tourSingle', params: { tour: tour }})}>
+                            <Text style={styles.tourButton}>{tour.title ? tour.title : ''}</Text>
+                        </TouchableOpacity>
+                        ))}
+                    </View>
                 </View>
                 <View style={styles.subGroup}>
                     <Text style={styles.header}>Subjects:</Text>
@@ -159,16 +162,19 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontStyle: 'italic'
     },
-    imageContainer: {
+    imageViewContainer: {
         backgroundColor: 'black',
         flex: 1,
         flexDirection: "row",
+        flexWrap: 'wrap',
         alignItems: "center"
     },
+    imageContainer: {
+        padding: 10,
+        width: '50%'
+    },
     gridImage: {
-        padding: 70,
-        margin: 10,
-        aspectRatio: 1.5
+        aspectRatio: 1.5,
     },
     italic: {
         fontStyle: 'italic',
@@ -208,6 +214,11 @@ const styles = StyleSheet.create({
         padding: 5,
         color: 'white',
         fontSize: 10
+    },
+    tourGroup: {
+        flex: 1,
+        flexDirection: 'row',
+        flexWrap: 'wrap'
     }
 })
 export default SingleStory

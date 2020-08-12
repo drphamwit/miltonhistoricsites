@@ -90,7 +90,7 @@ const SearchResult = ({ navigation, stories, tours}) => {
     }
     
     return (
-        <View style={{ flex: 2}}>
+        <View style={{ flex: 2 }}>
             <Tab.Navigator>
             <Tab.Screen name="Stories">
                 {() => <StoryDisplayWrapper items={stories} selectedCallBack={storySelectedCallBack} userLocation={location} />}
