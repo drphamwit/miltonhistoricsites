@@ -7,6 +7,7 @@ import BackButton from '../../misc/BackButton'
 import moment from 'moment'
 import StoryMarker from './StoryMarker'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { Typography, Common } from '../../../styles'
 
 const width = Dimensions.get('window').width
 
@@ -70,7 +71,7 @@ const SingleStory = ({ navigation, route }) => {
             <View style={styles.infoContainer}>
                 <Text style={styles.titleText}>{content.title}</Text>
                 <Text style={styles.subText}>{content.subtitle.replace('&#039;', '\'')}</Text>
-                <Text style={styles.authorText}>By {content.creator[0]}</Text>
+                <Text style={styles.subText}>By {content.creator[0]}</Text>
             </View>
             <View style={styles.descriptionContainer}>
                 <Text style={styles.textLede}>{content.lede}</Text>
@@ -112,7 +113,7 @@ const SingleStory = ({ navigation, route }) => {
                 <Citation author={content.creator} title={content.title} id={content.id} />
                 <View style={styles.subGroup}>
                     <Text style={styles.header}>Related Tours:</Text>
-                    <View style={styles.tourGroup}>
+                    <View style={Common.tourGroup}>
                         {findRelatedTours(tours, content.id).map(tour => (
                         <TouchableOpacity 
                             style={styles.buttonContainer} 
@@ -141,24 +142,19 @@ const styles = StyleSheet.create({
     },
     infoContainer: {
         backgroundColor: 'black',
+        padding: 15
     },
     titleText: {
         paddingTop: 5,
-        fontSize: 23,
+        fontSize: Typography.TITLE,
         color: 'white',
         paddingBottom: 10
     },
     subText: {
         color: 'white',
-        fontSize: 17,
+        fontSize: Typography.REGULAR,
         paddingBottom: 10
 
-    },
-    authorText: {
-        color: 'white',
-        fontSize: 12,
-        paddingBottom: 10
-        
     },
     descriptionContainer: {
         backgroundColor: 'white',
@@ -170,10 +166,8 @@ const styles = StyleSheet.create({
         fontStyle: 'italic'
     },
     imageViewContainer: {
+        ...Common.grid,
         backgroundColor: 'black',
-        flex: 1,
-        flexDirection: "row",
-        flexWrap: 'wrap',
         alignItems: "center"
     },
     imageContainer: {
@@ -190,7 +184,7 @@ const styles = StyleSheet.create({
     },
     mapTitle: {
         padding: 5,
-        fontSize: 17
+        fontSize: Typography.REGULAR
     },
     horizLine: {
         borderBottomColor: 'black',
@@ -203,7 +197,7 @@ const styles = StyleSheet.create({
     },
     header: {
         fontWeight: "bold",
-        fontSize: 16,
+        fontSize: Typography.REGULAR,
         marginBottom: 5
     },
     subGroup: {
@@ -220,12 +214,7 @@ const styles = StyleSheet.create({
         maxWidth: 100,
         padding: 5,
         color: 'white',
-        fontSize: 10
-    },
-    tourGroup: {
-        flex: 1,
-        flexDirection: 'row',
-        flexWrap: 'wrap'
+        fontSize: Typography.REGULAR
     },
     linkText: {
         color: 'blue'

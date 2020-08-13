@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { Text, View, StyleSheet, Dimensions } from 'react-native'
 import MapView, { PROVIDER_GOOGLE} from 'react-native-maps'
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
-import Geolocation from '@react-native-community/geolocation'
 import LoadingIcon from '../../misc/LoadingIcon'
 import BackButton from '../../misc/BackButton'
 import TourMarker from './TourMarker'
 import api from '../../../utils/api'
 import { getUserLocation } from '../../../utils/utils'
+import { Typography, Common, Colors } from '../../../styles'
 
 const width = Dimensions.get('window').width
 
@@ -101,14 +101,10 @@ const styles = StyleSheet.create({
         padding: 15
     },
     circle: {
-        borderWidth: 6,
-        borderColor: 'lightgray',
+        ...Common.circle,
         width: 75,
         height: 75,
         borderRadius: 75 / 2,
-        justifyContent: "center",
-        alignItems: "center"
-
     },
     vertLine: {
         borderLeftWidth: 6,
@@ -116,7 +112,7 @@ const styles = StyleSheet.create({
         borderColor: 'lightgray'
     },
     horizLine: {
-        borderBottomColor: '#1EAEDB',
+        borderBottomColor: Colors.LINK_COLOR,
         marginBottom: 10,
         borderBottomWidth: 2
     },
@@ -124,12 +120,12 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     title: {
-        fontSize: 23,
-        color: '#1EAEDB'
+        fontSize: Typography.TITLE,
+        color: Colors.LINK_COLOR
     },
     story: {
         flex: 1,
-				flexDirection: 'row',
+		flexDirection: 'row',
     },
     content: {
         paddingTop: 20,
@@ -139,7 +135,7 @@ const styles = StyleSheet.create({
         margin: 20
     },
     header: {
-        fontSize: 16,
+        fontSize: Typography.REGULAR,
         paddingBottom: 10,
     },
     titleContainer: {
@@ -153,12 +149,12 @@ const styles = StyleSheet.create({
     },
     creator: {
         paddingTop: 15
-		},
-		storyDescription: {
-			flex: 1,
-			flexWrap: 'wrap',
-			paddingTop: 5,
-			maxWidth: 250
+	},
+	storyDescription: {
+		flex: 1,
+		flexWrap: 'wrap',
+		paddingTop: 5,
+		maxWidth: 250
 			
 		}
 })

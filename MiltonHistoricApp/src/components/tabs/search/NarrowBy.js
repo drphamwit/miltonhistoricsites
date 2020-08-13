@@ -4,7 +4,7 @@ import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5'
 import { TouchableOpacity, FlatList } from 'react-native-gesture-handler'
 import RNPickerSelect from 'react-native-picker-select'
 import api from '../../../utils/api'
-import { Colors } from '../../../styles/index'
+import { Colors, Typography } from '../../../styles/index'
 
 const ListItem = ({ item, removeItem }) => {
     return (
@@ -111,7 +111,7 @@ const NarrowBy = ({ searchCallBack }) => {
 
 const pickerStyle = StyleSheet.create({
     inputIOS: {
-        fontSize: 16,
+        fontSize: Typography.REGULAR,
         paddingVertical: 12,
         paddingHorizontal: 10,
         borderWidth: 1,
@@ -122,7 +122,7 @@ const pickerStyle = StyleSheet.create({
         backgroundColor: 'white'
       },
       inputAndroid: {
-        fontSize: 16,
+        fontSize: Typography.REGULAR,
         paddingHorizontal: 10,
         paddingVertical: 8,
         borderWidth: 0.5,
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
         marginBottom: 10
       },
       searchTitleText: {
-        fontSize: 20,
+        fontSize: Typography.SUB_HEADING,
         backgroundColor: Colors.BACKGROUND, 
         color: 'white', 
         padding: 10
@@ -181,12 +181,12 @@ const styles = StyleSheet.create({
         backgroundColor: 'white'
       },
       advSearchInput: { 
-        fontSize:16, 
+        fontSize: Typography.REGULAR, 
         backgroundColor: 'white', 
         padding: 10 
     },
     icon: {
-        fontSize: 20
+        fontSize: Typography.SUB_HEADING
     }
 })
 export default NarrowBy

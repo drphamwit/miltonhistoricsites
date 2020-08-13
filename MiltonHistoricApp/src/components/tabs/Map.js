@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet } from 'react-native'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import api from '../../utils/api'
 import { getUserLocation } from '../../utils/utils'
 import LoadingIcon from '../misc/LoadingIcon'
 import StoryMarker from './Story/StoryMarker'
+import { Common } from '../../styles'
 
 const Map = ({ navigation }) => {
   const [loading, setLoading] = useState(true)
@@ -26,7 +26,7 @@ const Map = ({ navigation }) => {
   return (
     <MapView
         provider={PROVIDER_GOOGLE}
-        style={styles.map}
+        style={Common.container}
         region={{
           latitude: currentPosition.latitude,
           longitude: currentPosition.longitude,
@@ -40,13 +40,5 @@ const Map = ({ navigation }) => {
       </MapView>
   )
 }
-
-const styles = StyleSheet.create({
-  map: {
-    flex: 1,
-    height:'100%'
-  }
-})
-      
   
 export default Map

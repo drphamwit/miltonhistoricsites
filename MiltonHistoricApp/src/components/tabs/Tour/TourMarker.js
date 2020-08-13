@@ -1,6 +1,7 @@
 import React from 'react'
 import { Text, View, StyleSheet} from 'react-native'
 import { Marker, Callout } from 'react-native-maps'
+import { Common } from '../../../styles'
 
 const TourMarker = ({ story, navigation }) => {
   return (
@@ -28,13 +29,11 @@ export default TourMarker
 
 const styles = StyleSheet.create({
     circle: {
-        borderWidth: 6,
-        borderColor: 'lightgray',
+        ...Common.circle,
         width: 60,
         height: 60,
         borderRadius: 60 / 2,
-        justifyContent: "center",
-        alignItems: "center"
+        
 		},
 		calloutInfo: {
 			marginTop: 10,

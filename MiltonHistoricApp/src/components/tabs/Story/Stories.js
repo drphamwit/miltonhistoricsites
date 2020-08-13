@@ -7,6 +7,7 @@ import SingleStory from './SingleStory'
 import api from '../../../utils/api'
 import LoadingIcon from '../../misc/LoadingIcon'
 import { getUserLocation, sortByDate, sortByDistance } from '../../../utils/utils'
+import { Common } from '../../../styles'
 
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
@@ -33,7 +34,7 @@ const StoryList = ({ navigation }) => {
   }
 
   return (
-  <View style={styles.container}>
+  <View style={Common.container}>
     <Tab.Navigator>
       <Tab.Screen name="Recent">
         {() => <StoryDisplay items={sortByDate(items)} selectedCallback={selectedCallback} userLocation={location}/>}
@@ -63,11 +64,5 @@ const Stories = ({ navigation, route }) => {
     </Stack.Navigator>
 )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  }
-})
 
 export default Stories

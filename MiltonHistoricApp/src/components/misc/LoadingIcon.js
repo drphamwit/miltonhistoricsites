@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5'
+import { Common } from '../../styles'
 
 const LoadingIcon = () => (
     <View style={styles.loading}>
@@ -10,7 +11,7 @@ const LoadingIcon = () => (
 
 const styles = StyleSheet.create({
     loading: {
-        flex: 1,
+        ...Common.container,
         alignItems: "center", 
         justifyContent: "center"
     }

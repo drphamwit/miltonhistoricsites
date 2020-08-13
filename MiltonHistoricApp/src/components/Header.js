@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet } from 'react-native';
-import { Colors } from '../styles/index'
+import { Colors, Typography } from '../styles/index'
 
 const Header = ({title}) => {
   return (
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     color: 'white',
     paddingTop: 40,
     paddingLeft: 50,
-    fontSize: 23,
+    fontSize: Typography.TITLE,
     textAlign: 'left',
   },
 });

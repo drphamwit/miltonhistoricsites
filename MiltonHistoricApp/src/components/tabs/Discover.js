@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, Text, StyleSheet} from 'react-native'
+import { Common } from '../../styles'
 
 const Discover = () => (
       <View style={styles.container}>
@@ -9,7 +10,7 @@ const Discover = () => (
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    ...Common.container,
     justifyContent: 'center', 
     alignItems: 'center'
   }

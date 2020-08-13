@@ -5,7 +5,7 @@ import separateStoriesAndTours from '../../../utils/separateStoriesAndTours'
 import SearchResult from './SearchResult'
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5'
 import NarrowBy from './NarrowBy'
-import { Colors } from '../../../styles/index'
+import { Colors, Typography, Common } from '../../../styles/index'
 
 const SearchBar = ({ setParentText, searchCallBack, extendedSearchCallBack }) => {
   const [text, setText] = useState('')
@@ -60,7 +60,7 @@ const Search = ({ navigation }) => {
   }
 
     return (
-      <View style={styles.container}>
+      <View style={Common.container}>
         <SearchBar searchCallBack={searchCallBack} extendedSearchCallBack={extendedSearchCallBack} setParentText={setText} />
         <SearchResult tours={tours} stories={stories} navigation={navigation} />
       </View>
@@ -82,23 +82,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   searchIcon: {
-    fontSize: 20, 
+    fontSize: Typography.SUB_HEADING, 
     color: Colors.SEARCH_ICON_COLOR
   },
   extendedSearchToggle: {
-    fontSize: 20, 
+    fontSize: Typography.SUB_HEADING, 
     position: 'absolute', 
     right: 10, 
     color: Colors.SEARCH_ICON_COLOR 
   },
   textinput: {
-    fontSize:20,
+    fontSize: Typography.SUB_HEADING,
     paddingLeft:15, 
     paddingTop: 0, 
     paddingBottom: 0
-  },
-  container: {
-    flex: 1
   }
 })
   

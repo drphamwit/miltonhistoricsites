@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Text, View, StyleSheet, Image, FlatList } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { haversine } from '../../../utils/utils'
+import { Typography } from '../../../styles'
 
 const StoryItem = ( { item, selectedCallback, userLocation } ) => {
     return (
@@ -45,11 +46,11 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     listItemText: {
-        fontSize: 12,
+        fontSize: Typography.STORY_LIST,
         fontWeight: "500"
     },
     distanceText: {
-        fontSize: 12,
+        fontSize: Typography.STORY_LIST,
         paddingTop: 5,
         color: '#808080'
     },
