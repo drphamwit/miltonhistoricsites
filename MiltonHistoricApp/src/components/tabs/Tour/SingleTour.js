@@ -70,7 +70,7 @@ const SingleTour = ({ navigation, route }) => {
         <ScrollView>
           <BackButton backCallBack={() => {navigation.navigate("tourList")}}/>
           <MapView 
-            style={styles.map}
+            style={Common.displayContainer}
             provider={PROVIDER_GOOGLE}
             region={{
               latitude: tour.items[0].latitude,
@@ -82,24 +82,23 @@ const SingleTour = ({ navigation, route }) => {
           >
              {stories.map(story => <TourMarker key={story.id} story={story} navigation={navigation}/>)} 
           </MapView>
+          <View style={Common.content}>
           <View style={styles.titleContainer}>
             <Text style={styles.title}>{tour.title}</Text>
             <Text style={styles.creator}>Curated by {tour.creator}</Text>
           </View>
-          <Text style={styles.description}>{tour.description.replace(/(<([^>]+)>)/ig, '')}</Text>
-          <View style={styles.location}>
+          <Text>{tour.description.replace(/(<([^>]+)>)/ig, '')}</Text>
+          <View>
               <Text style={styles.header} >Locations for Tour</Text>
               <View style={styles.horizLine} />
               {stories.map((item, index) => <Location navigation={navigation} key={item.id} index={index} item={item} length={tour.items.length} />)}
           </View>  
+          </View>
         </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
-    location: {
-        padding: 15
-    },
     circle: {
         ...Common.circle,
         width: 75,
@@ -112,16 +111,15 @@ const styles = StyleSheet.create({
         borderColor: 'lightgray'
     },
     horizLine: {
+        ...Common.horizontalLine,
         borderBottomColor: Colors.LINK_COLOR,
-        marginBottom: 10,
-        borderBottomWidth: 2
     },
     container: {
         alignItems: "center",
     },
     title: {
-        fontSize: Typography.TITLE,
-        color: Colors.LINK_COLOR
+        ...Common.title,
+        color: Colors.LINK_COLOR,
     },
     story: {
         flex: 1,
@@ -131,31 +129,25 @@ const styles = StyleSheet.create({
         paddingTop: 20,
         paddingLeft: 30
     },
-    description: {
-        margin: 20
-    },
     header: {
         fontSize: Typography.REGULAR,
-        paddingBottom: 10,
+        paddingTop: 10,
+        ...Common.horizontalSpacing
     },
     titleContainer: {
-        paddingTop: 15,
+        paddingTop: 10,
+        ...Common.horizontalSpacing,
         alignItems: "center"
     },
     map: {
-        padding: 70,
         width: width,
         aspectRatio: 1.5
     },
-    creator: {
-        paddingTop: 15
-	},
 	storyDescription: {
 		flex: 1,
 		flexWrap: 'wrap',
 		paddingTop: 5,
 		maxWidth: 250
-			
 		}
 })
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { ScrollView, View, Image, Text, StyleSheet, Dimensions, Linking, Button } from 'react-native'
+import { ScrollView, View, Image, Text, StyleSheet, Linking, Button } from 'react-native'
 import MapView, { PROVIDER_GOOGLE, Marker} from 'react-native-maps'
 import api from '../../../utils/api'
 import LoadingIcon from '../../misc/LoadingIcon'
@@ -9,8 +9,6 @@ import StoryMarker from './StoryMarker'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Typography, Common } from '../../../styles'
 
-const width = Dimensions.get('window').width
-
 const findRelatedTours = (tours, id) => tours.filter(tour => tour.items.find(story => story.id === id))
 
 const getNewDate = d => moment(d).format("MMM D YYYY")
@@ -19,7 +17,7 @@ const removeTag = element => element.replace(/<(.|\n)*?>/ig, "")
 
 const LinkGroup = ({ a, title }) => {
     return (
-        <View style={styles.subGroup}>
+        <View style={Common.horizontalSpacing}>
             <Text style={styles.header}>{title}</Text>
             {a.map(tag => {
                 const link = removeTag(tag)
@@ -38,7 +36,7 @@ const Citation = ({ author, title, id}) => {
     const date = moment().format('LL')
     const citation = `${author}, "${title}," Milton Historic Sites, accessed ${date} http://miltonhistoricsites.org/items/show/${id}`
     return (
-        <View style={styles.subGroup}>
+        <View style={Common.horizontalSpacing}>
             <Text style={styles.header}>Citation:</Text>
             <Text>{citation}</Text>
         </View>
@@ -64,16 +62,20 @@ const SingleStory = ({ navigation, route }) => {
             }) 
     }, [route.params?.id])
     
-    return (isFetching) ? <LoadingIcon />
-        : (<ScrollView>
+    if (isFetching) {
+        return <LoadingIcon />
+    }
+
+    return (
+        <ScrollView style={{backgroundColor: 'white'}}>
             {<BackButton backCallBack={() => navigation.navigate('StoryMain')} />}
-            <Image style={styles.image} source={{uri: Object.keys(content.files)[0]}} />
+            <Image style={Common.displayContainer} source={{uri: Object.keys(content.files)[0]}} />
             <View style={styles.infoContainer}>
                 <Text style={styles.titleText}>{content.title}</Text>
                 <Text style={styles.subText}>{content.subtitle.replace('&#039;', '\'')}</Text>
                 <Text style={styles.subText}>By {content.creator[0]}</Text>
             </View>
-            <View style={styles.descriptionContainer}>
+            <View style={Common.content}>
                 <Text style={styles.textLede}>{content.lede}</Text>
                 <Text>{removeTag(content.description)}</Text>
             </View>
@@ -92,7 +94,7 @@ const SingleStory = ({ navigation, route }) => {
                 <View style={styles.horizLine} />
                 <MapView 
                     provider={PROVIDER_GOOGLE}
-                    style={styles.image} 
+                    style={Common.displayContainer} 
                     region={{
                         latitude: content.latitude,
                         longitude: content.longitude,
@@ -105,15 +107,15 @@ const SingleStory = ({ navigation, route }) => {
                 </MapView>
                 <Text style={styles.italic}>{content.address}</Text>
             </View>
-            <View style={styles.bottomContent}>
-                <View style={styles.subGroup}>
+            <View style={Common.content}>
+                <View style={Common.horizontalSpacing}>
                     <Text style={styles.box}>The Milton Historical Society is more interesting than you thought, isn't it</Text>
                 </View>
                 <LinkGroup a={[content.website]} title={"Official Website:"}/>
                 <Citation author={content.creator} title={content.title} id={content.id} />
-                <View style={styles.subGroup}>
+                <View style={Common.horizontalSpacing}>
                     <Text style={styles.header}>Related Tours:</Text>
-                    <View style={Common.tourGroup}>
+                    <View style={Common.grid}>
                         {findRelatedTours(tours, content.id).map(tour => (
                         <TouchableOpacity 
                             style={styles.buttonContainer} 
@@ -124,54 +126,40 @@ const SingleStory = ({ navigation, route }) => {
                         </TouchableOpacity>
                         ))}
                     </View>
-                </View>
-                <View style={styles.subGroup}>
-                    <Text style={styles.header}>Subjects:</Text>
+                    
                 </View>
                 <LinkGroup a={content.related_resources} title={"Related Resources:"}/>
                 <Text style={styles.italic}>Published on {getNewDate(content.modified)}</Text>
             </View>
-        </ScrollView>)
+        </ScrollView>
+    )
 }
 
 const styles = StyleSheet.create({
-    image : {
-        padding: 70,
-        width: width,
-        aspectRatio: 1.5
-    },
     infoContainer: {
+        ...Common.content,
         backgroundColor: 'black',
-        padding: 15
     },
     titleText: {
-        paddingTop: 5,
-        fontSize: Typography.TITLE,
+        ...Common.title,
         color: 'white',
-        paddingBottom: 10
     },
     subText: {
         color: 'white',
         fontSize: Typography.REGULAR,
-        paddingBottom: 10
-
-    },
-    descriptionContainer: {
-        backgroundColor: 'white',
-        padding: 15
+        ...Common.horizontalSpacing
     },
     textLede: {
-        paddingBottom: 10,
+        ...Common.horizontalSpacing,
         fontWeight: 'bold',
         fontStyle: 'italic'
     },
     imageViewContainer: {
         ...Common.grid,
-        backgroundColor: 'black',
         alignItems: "center"
     },
     imageContainer: {
-        padding: 10,
+        padding: 15,
         width: '50%'
     },
     gridImage: {
@@ -179,34 +167,21 @@ const styles = StyleSheet.create({
     },
     italic: {
         fontStyle: 'italic',
-        marginLeft: 10,
-        marginRight: 10
     },
     mapTitle: {
         padding: 5,
         fontSize: Typography.REGULAR
     },
     horizLine: {
+        ...Common.horizontalLine,
         borderBottomColor: 'black',
-        borderBottomWidth: 1,
-        marginBottom: 10
-    },
-    bottomContent: {
-        backgroundColor: "white",
-        paddingTop: 10
     },
     header: {
         fontWeight: "bold",
         fontSize: Typography.REGULAR,
-        marginBottom: 5
-    },
-    subGroup: {
-        marginBottom: 10,
-        marginLeft: 10,
-        marginRight: 10
+        ...Common.horizontalSpacing
     },
     box: {
-        borderColor: 'black',
         backgroundColor: 'lightgray',
     },
     tourButton: {
@@ -220,14 +195,12 @@ const styles = StyleSheet.create({
         color: 'blue'
     },
     imageSection: {
-        backgroundColor: 'black', 
-        paddingTop: 10
-    },
-    mapSection: {
-        backgroundColor: 'white'
+        ...Common.content,
+        backgroundColor: 'black',
     },
     buttonContainer: {
         padding: 5
     }
+
 })
 export default SingleStory
