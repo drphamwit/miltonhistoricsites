@@ -10,12 +10,14 @@ const Map = ({ navigation }) => {
   const [loading, setLoading] = useState(true)
   const [stories, setStories] = useState([])
   const [currentPosition, setCurrentPosition] = useState({})
+
   useEffect(() => {
     api.getAllStories().then(response => {
       setStories(response.items)
       setLoading(false)
     })
     getUserLocation(setCurrentPosition)
+
   }, [])
 
 
