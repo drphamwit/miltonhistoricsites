@@ -1,4 +1,5 @@
 import React from 'react';
+import { Colors, Typography } from '../styles/index'
 import {SafeAreaView, Text, StyleSheet, Platform } from 'react-native';
 import { useRoute } from '@react-navigation/native'
 
@@ -17,14 +18,16 @@ const Header = ({title}) => {
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: 'darkslateblue',
+    height: 100,
+    padding: 15,
+    backgroundColor: Colors.BACKGROUND,
     flexDirection: 'row',
     alignItems: 'center',
   },
   text: {
     color: 'white',
+    fontSize: Typography.TITLE,
     marginLeft: '5%',
-    fontSize: 23,
   },
   AndroidHeader: {
     flex: 0.1,

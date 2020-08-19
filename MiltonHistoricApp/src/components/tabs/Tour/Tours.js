@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { View } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
 import TourDisplay from './TourDisplay'
 import SingleTour from './SingleTour'
 import api from '../../../utils/api'
 import LoadingIcon from '../../misc/LoadingIcon'
+import { Common } from '../../../styles'
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -31,7 +32,7 @@ const TourMain = ({ navigation }) => {
   }
 
   return (
-  <View style={{ flex: 1 }}>
+  <View style={Common.container}>
     <TourDisplay items={tours} selectedCallBack={selectedCallBack} />
   </View>
   )

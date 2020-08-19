@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import { FlatList, StyleSheet, View, Text } from 'react-native'
+import React from 'react'
+import { FlatList, StyleSheet, Text } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import api from '../../../utils/api'
+import { Typography, Colors } from '../../../styles'
 
 const getSubDescr = description => description.substring(0,description.indexOf("<br>"))
 
@@ -28,9 +28,9 @@ const styles = StyleSheet.create({
         backgroundColor: "white"
     },
     title: {
-        color: '#1EAEDB',
+        color: Colors.LINK_COLOR,
         padding: 3,
-        fontSize: 20
+        fontSize: Typography.TITLE
     },
     description: {
         marginTop: 5,

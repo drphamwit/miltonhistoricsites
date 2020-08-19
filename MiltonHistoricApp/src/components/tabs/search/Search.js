@@ -5,45 +5,35 @@ import separateStoriesAndTours from '../../../utils/separateStoriesAndTours'
 import SearchResult from './SearchResult'
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5'
 import NarrowBy from './NarrowBy'
+import { Colors, Typography, Common } from '../../../styles/index'
 
 const SearchBar = ({ setParentText, searchCallBack, extendedSearchCallBack }) => {
   const [text, setText] = useState('')
   const [visible, setVisible] = useState(false);
 
   return (
-    <View style={{ flex: 0 }}>
-      <View
-      style={{
-        height: 60,
-        backgroundColor: 'darkslateblue',
-        justifyContent: 'center',
-        paddingHorizontal: 5,
-      }}>
-      <View
-      style={{
-        height: 40,
-        backgroundColor: 'white',
-        flexDirection: 'row',
-        padding: 5,
-        alignItems: 'center',
-      }}>
-        <FontAwesome5Icon name="search" style={{ fontSize: 20, color: '#a1a1a1' }} />
-        <TextInput 
-          placeholder="Search"  
-          style={{ fontSize:20,paddingLeft:15 }} 
-          onChangeText={value => {
-            setText(value)
-            setParentText(value)
-          }}
-          onSubmitEditing={keypress => searchCallBack()}
-        />
-        <FontAwesome5Icon name={visible ? 'chevron-down' : 'chevron-up'} style={{ fontSize: 20, position: 'absolute', right: 10, color: '#a1a1a1' }} onPress={() => setVisible(!visible)}/>
-      </View>
+    <View>
+      <View style={styles.searchBarContainer}>
+        <View style={styles.searchBarContainer2}>
+          <FontAwesome5Icon name="search" style={styles.searchIcon} />
+          <TextInput 
+            placeholder="Search"  
+            style={styles.textinput} 
+            onChangeText={value => {
+              setText(value)
+              setParentText(value)
+            }}
+            onSubmitEditing={keypress => searchCallBack()}
+          />
+          <FontAwesome5Icon 
+            name={visible ? 'chevron-down' : 'chevron-up'} 
+            style={styles.extendedSearchToggle} 
+            onPress={() => setVisible(!visible)}
+          />
+        </View>
       </View>
       {visible ?
-      <View style={{ backgroundColor: 'darkslateblue'}}>
         <NarrowBy searchCallBack={extendedSearchCallBack}/>
-      </View>
       : null}
     </View>
   )
@@ -70,7 +60,7 @@ const Search = ({ navigation }) => {
   }
 
     return (
-      <View style={{flex: 1}}>
+      <View style={Common.container}>
         <SearchBar searchCallBack={searchCallBack} extendedSearchCallBack={extendedSearchCallBack} setParentText={setText} />
         <SearchResult tours={tours} stories={stories} navigation={navigation} />
       </View>
@@ -78,25 +68,35 @@ const Search = ({ navigation }) => {
 }
 
 const styles = StyleSheet.create({
-  searchSection: {
-    flex: 1,
-    flexDirection: 'row',
+  searchBarContainer: {
+    height: 60,
+    backgroundColor: Colors.BACKGROUND,
     justifyContent: 'center',
+    paddingHorizontal: 5,
+  },
+  searchBarContainer2: {
+    height: 40,
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    padding: 5,
     alignItems: 'center',
-    marginRight: 10
   },
   searchIcon: {
-    padding: 10,
+    fontSize: Typography.SUB_HEADING, 
+    color: Colors.SEARCH_ICON_COLOR
   },
-  input: {
-    flex: 1,
-    paddingTop: 10,
-    paddingRight: 10,
-    paddingLeft: 0,
-    paddingBottom: 10,
-    backgroundColor: '#fff',
-    color: '#424242',
+  extendedSearchToggle: {
+    fontSize: Typography.SUB_HEADING, 
+    position: 'absolute', 
+    right: 10, 
+    color: Colors.SEARCH_ICON_COLOR 
   },
+  textinput: {
+    fontSize: Typography.SUB_HEADING,
+    paddingLeft:15, 
+    paddingTop: 0, 
+    paddingBottom: 0
+  }
 })
   
 

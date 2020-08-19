@@ -1,22 +1,32 @@
 import React from 'react'
-import { Text, Image, View } from 'react-native'
+import { Text, Image, StyleSheet} from 'react-native'
 import { Marker, Callout } from 'react-native-maps'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const StoryMarker = ({ story, navigation }) => (
     <Marker
       coordinate={{ latitude: story.latitude, longitude: story.longitude}}
     >
       <Callout onPress={() => navigation.navigate('Stories', { screen: 'SingleStory', params: { id: story.id }})}>
-          <Text style={{marginTop: 5}}>
+          <Text style={styles.text}>
             <Image 
                 source={{uri: story.thumbnail}} 
-                style={{width: 200, height: 100, padding: 10}} 
+                style={styles.image} 
             />
           </Text>
         <Text>{story.title}</Text>
       </Callout>
     </Marker>
 )
+
+const styles = StyleSheet.create({
+  image: {
+    width: 200, 
+    height: 100, 
+    padding: 10
+  },
+  text: {
+    marginTop: 5
+  }
+})
 
 export default StoryMarker

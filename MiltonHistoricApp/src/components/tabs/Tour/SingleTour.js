@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { Text, View, StyleSheet, Dimensions } from 'react-native'
 import MapView, { PROVIDER_GOOGLE} from 'react-native-maps'
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
-import Geolocation from '@react-native-community/geolocation'
 import LoadingIcon from '../../misc/LoadingIcon'
 import BackButton from '../../misc/BackButton'
 import TourMarker from './TourMarker'
 import api from '../../../utils/api'
 import { getUserLocation } from '../../../utils/utils'
+import { Typography, Common, Colors } from '../../../styles'
 
 const width = Dimensions.get('window').width
 
@@ -35,7 +35,6 @@ const Location = ({ navigation, item, length, index }) => (
     </View> 
 )
 
-//  TODO Figure out the best way to aggregate full story descriptions from API
 const SingleTour = ({ navigation, route }) => {
     const [tour, setTour] = useState({})
     const [stories, setStories] = useState([])
@@ -71,7 +70,7 @@ const SingleTour = ({ navigation, route }) => {
         <ScrollView>
           <BackButton backCallBack={() => {navigation.navigate("tourList")}}/>
           <MapView 
-            style={styles.map}
+            style={Common.displayContainer}
             provider={PROVIDER_GOOGLE}
             region={{
               latitude: tour.items[0].latitude,
@@ -83,33 +82,28 @@ const SingleTour = ({ navigation, route }) => {
           >
              {stories.map(story => <TourMarker key={story.id} story={story} navigation={navigation}/>)} 
           </MapView>
+          <View style={Common.content}>
           <View style={styles.titleContainer}>
             <Text style={styles.title}>{tour.title}</Text>
             <Text style={styles.creator}>Curated by {tour.creator}</Text>
           </View>
-          <Text style={styles.description}>{tour.description.replace(/(<([^>]+)>)/ig, '')}</Text>
-          <View style={styles.location}>
+          <Text>{tour.description.replace(/(<([^>]+)>)/ig, '')}</Text>
+          <View>
               <Text style={styles.header} >Locations for Tour</Text>
               <View style={styles.horizLine} />
               {stories.map((item, index) => <Location navigation={navigation} key={item.id} index={index} item={item} length={tour.items.length} />)}
           </View>  
+          </View>
         </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
-    location: {
-        padding: 15
-    },
     circle: {
-        borderWidth: 6,
-        borderColor: 'lightgray',
+        ...Common.circle,
         width: 75,
         height: 75,
         borderRadius: 75 / 2,
-        justifyContent: "center",
-        alignItems: "center"
-
     },
     vertLine: {
         borderLeftWidth: 6,
@@ -117,50 +111,43 @@ const styles = StyleSheet.create({
         borderColor: 'lightgray'
     },
     horizLine: {
-        borderBottomColor: '#1EAEDB',
-        marginBottom: 10,
-        borderBottomWidth: 2
+        ...Common.horizontalLine,
+        borderBottomColor: Colors.LINK_COLOR,
     },
     container: {
         alignItems: "center",
     },
     title: {
-        fontSize: 22,
-        color: '#1EAEDB'
+        ...Common.title,
+        color: Colors.LINK_COLOR,
     },
     story: {
         flex: 1,
-				flexDirection: 'row',
+		flexDirection: 'row',
     },
     content: {
         paddingTop: 20,
         paddingLeft: 30
     },
-    description: {
-        margin: 20
-    },
     header: {
-        fontSize: 16,
-        paddingBottom: 10,
+        fontSize: Typography.REGULAR,
+        paddingTop: 10,
+        ...Common.horizontalSpacing
     },
     titleContainer: {
-        paddingTop: 15,
+        paddingTop: 10,
+        ...Common.horizontalSpacing,
         alignItems: "center"
     },
     map: {
-        padding: 70,
         width: width,
         aspectRatio: 1.5
     },
-    creator: {
-        paddingTop: 15
-		},
-		storyDescription: {
-			flex: 1,
-			flexWrap: 'wrap',
-			paddingTop: 5,
-			maxWidth: 250
-			
+	storyDescription: {
+		flex: 1,
+		flexWrap: 'wrap',
+		paddingTop: 5,
+		maxWidth: 250
 		}
 })
 

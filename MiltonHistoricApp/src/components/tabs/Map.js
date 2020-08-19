@@ -4,6 +4,7 @@ import api from '../../utils/api'
 import { getUserLocation } from '../../utils/utils'
 import LoadingIcon from '../misc/LoadingIcon'
 import StoryMarker from './Story/StoryMarker'
+import { Common } from '../../styles'
 
 const Map = ({ navigation }) => {
   const [loading, setLoading] = useState(true)
@@ -27,7 +28,7 @@ const Map = ({ navigation }) => {
   return (
     <MapView
         provider={PROVIDER_GOOGLE}
-        style={{flex: 1, height: '100%'}}
+        style={Common.container}
         region={{
           latitude: currentPosition.latitude,
           longitude: currentPosition.longitude,
@@ -41,6 +42,5 @@ const Map = ({ navigation }) => {
       </MapView>
   )
 }
-      
   
 export default Map
