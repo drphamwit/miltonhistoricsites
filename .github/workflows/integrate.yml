@@ -42,13 +42,11 @@ jobs:
       - name: Build Android release
         working-directory: ./MiltonHistoricApp
         run: |
-          cd android && ./gradlew assembleRelease -
-          PMYAPP_UPLOAD_STORE_PASSWORD='${{ secrets.KEYSTORE_PASSWORD }}' -
-          PMYAPP_UPLOAD_KEY_PASSWORD= '{{ secrets.KEYSTORE_PASSWORD }}'
+          cd android && ./gradlew bundleRelease
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
-          name: app-release.apk
+          name: app.aab
           path: MiltonHistoricApp/android/app/build/outputs/apk/release
         
         
