@@ -8,15 +8,18 @@ jobs:
   playstore_upload:
     runs-on: ubuntu-latest
     steps:
-      - name: Download app artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: app.aab
-
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        working-directory: ./SampleApp
+        run: npm install
+      - name: Build Android release
+        working-directory: ./SampleApp
+        run: |
+          cd android && ./gradlew bundleRelease
       - name: Upload to play store
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJson: \nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCcdrJ6Rzxtplpo\nrjKZWO5XSsmIXqFVmPqAP4PsMC0wO4NRV44HlsTY7dbj0a5/5GyLThyuv7lXu9P9\nIFOiPIQUuXKNTkJwRUlB4bdi7vKNW6tOA+zGYXJG5rTkyLwucy6GXcG1VUoFyWHZ\nM3QsbIDEZzNOdqOpYlIJOQPJJJpXAEWu/nWOv5icyiiFg2HxCvK95aNrJoz0GQad\ntnc/mLo4vxOV5T7eekYQQwyASPlNL0Zqftn7zOgcHvfFTI02lydXygFwjB9n6DUW\nZXGC6/bFpzLPP8wEOtcOJpLfneNYeg2OKIXa6nXhbYulAkfX3plnWLKl+P4fi1C9\nbf6J/owbAgMBAAECggEAHunSzJcLiOyPu1QDmkm4WZXkqKVtweBGShWChqVkID35\n7ZXbcYNn5CZlyUBR9mHW0lU+FIa742owcbgz3f+P5xpW2DVoqg7+cN5cYdctJCHD\nAFiFLRLuxbRqdDN2/sRyIkke7ylpRShrRUNFxksvy95KBEwrfNl4tOrHZTPurJaJ\nkDyC2nQEYe+DVB6OEI4CYJuVryPTa6ubD8wwg9hDsKKpjxQXeoCMhJ22/zVPCfbQ\nauumBnrhvc/5m2f61/TVvsz7jOJiJ+5lO0tXolDKzHoCkl6Ay5hAFugC3d7HX4kY\nOFyOx2myOQLPJjDFDwg3rjvRbDyCYz7xSZ8uE/CCyQKBgQDN1Kn8wJQKpPX/LSS2\nUtAVtP+qGA4QC2IKOGRdkt0gQNxlL+z67tmf0HdkDei+vkedevI2EJo84J1MrDYL\nEva/bgAAV9a+qHl8EeRf1YHi+UCh5V6AuNJjOTqmIHQLw/+fPRdymwtZ/EGL4Rdl\nf7n/0fu7iYCqaKrrKQKWPaXZgwKBgQDCmaYc6YP2UYKpaCYpi4F0rt0XVPvKJyjo\n2rvHK9UqB2sQqdlphKXq+oE4JrAY4il1emCfQBW//N5vCYRPOyZtUVznK4L93l9e\nG8XSpUAkPga3k9OwTP+nlAhKTb8Q5hKAZdSLbQSrpLL/6eD0Udm2532Ix7b1ObjQ\nubUl3dY3iQKBgH7uOZHbtK/HwMgHL8+bzCTGxK9BPFLaojAJTKOD8Qd12DQyVOL+\nLohmh2nVRgVy1DkiW4HJxUPrhDWHMaCspiuxCyErCgvzW0+OvRX4VawB58Cu8RNS\nZrO31Bokg0vKJ7Ysd2w+fsaUUFuRiNsX5D0FYkbpacYs29I/LRA3njI/AoGAXxMY\ncFm6alaqgr/qnTOWXP6t8B9KIRr+xr1PLuEAdVdIfMyu9vmi4mnfRiLIuG+Ol+Hh\nYQy7U6BkwFUi+l7IyHIO9LZyejvx1hW1kdPAwbQ4LeqgaytDYIlXf436gnQVp/uY\nW0I5HO8LsTKAAH4Y4164G2KPxcGcxQVmNojqhxkCgYBTULxve8zuIGk0ykmA78CZ\nh/BVRzMqrA7/vBghSFDy6uEpWbhhdgja7ZYhbWFqwuKPll4ikqJklqkeYN+/kS/U\n9RMf6CC6qH9m23kcE6RGdw7T+YyRHqVJGaodeqvY4qXzyx6HoGauB3uBqJe+E2na\nX/VPK1VbrzhncNM4kKAMSQ==\n
           packageName: com.miltonhistoricapp
-          releaseFile: app.aab
+          releaseFile: app-release.aab
           track: internal
