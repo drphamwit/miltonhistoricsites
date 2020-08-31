@@ -46,7 +46,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
-          name: app.aab
-          path: MiltonHistoricApp/android/app/build/outputs/bundle/release/
+          name: App Bundle
+          path: MiltonHistoricApp/android/app/build/outputs/bundle/release/app.aab
         
         
