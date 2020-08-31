@@ -29,24 +29,4 @@ jobs:
       
     - name: npm test
       working-directory: ./MiltonHistoricApp
-      run: npm test
-  
-  build_android:
-    needs: build_and_test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Install dependencies
-        working-directory: ./MiltonHistoricApp
-        run: npm install
-      - name: Build Android release
-        working-directory: ./MiltonHistoricApp
-        run: |
-          cd android && ./gradlew bundleRelease
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v1
-        with:
-          name: App-Bundle
-          path: MiltonHistoricApp/android/app/build/outputs/bundle/release/app-release.aab
-        
-        
+      run: npm test       
